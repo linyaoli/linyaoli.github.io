@@ -6,10 +6,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Linyao Li - Blog Posts</title>
+  <title>Linyao Li - nginx's add_header is not working</title>
   <meta name="author" content="Linyao Li" />
   <meta name="description" content="The blog of Linyao Li" />
-  <link rel="canonical" href="http://example.com/" />
+  <link rel="canonical" href="http://example.com/2017/02/23/nginx-add-header.html" />
 
   <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="/favicon.png">
@@ -69,16 +69,37 @@
     </div>
 
     <div class="eleven columns content">
-      <div id="home">
-  <h2><i class="fa fa-bookmark"></i> Blog Posts</h2>
-  <ul id="blog-posts" class="posts">
+      <p class="meta">
+  February 23, 2017 
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">nginx's add_header is not working</h1>
+
+<div id="post">
+  <p>Just in case anyone turns into a clusterfuck that:
+NO, stackoverflow doesn’t help!(just like me)
+try this:</p>
+<pre><code>set $content_disposition $upstream_http_content_disposition;
+...
+add_header Content-Disposition $content_disposition;
+</code></pre>
+
+</div>
+
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
     
-      <li><span>23 Feb 2017 &raquo;</span><a href="/2017/02/23/2017-02-23-nginx-add-header.html"></a></li>
-    
-      <li><span>07 Mar 2016 &raquo;</span><a href="/2016/03/07/backfill-systems.html">A Typical Design of Database Backfill System</a></li>
+    <li>
+      <span>07 Mar 2016 &raquo;</span> <a href="/2016/03/07/backfill-systems.html">A Typical Design of Database Backfill System</a>
+    </li>
     
   </ul>
 </div>
+
 
       <div class="footer">
         <div class="disclaimer">

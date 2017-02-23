@@ -4,13 +4,28 @@
  <title>The blog of Linyao Li</title>
  <link href="http://example.com/atom.xml" rel="self"/>
  <link href="http://example.com"/>
- <updated>2016-03-10T17:48:08-08:00</updated>
+ <updated>2017-02-23T16:07:43-08:00</updated>
  <id>http://example.com</id>
  <author>
    <name>Linyao Li</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title></title>
+   <link href="http://example.com/2017/02/23/2017-02-23-nginx-add-header.html"/>
+   <updated>2017-02-23T16:07:43-08:00</updated>
+   <id>http://example.com/2017/02/23/2017-02-23-nginx-add-header</id>
+   <content type="html">&lt;p&gt;Just in case anyone turns into a clusterfuck that:
+NO, stackoverflow doesn’t help!(just like me)
+try this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;set $content_disposition $upstream_http_content_disposition;
+...
+add_header Content-Disposition $content_disposition;
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+ </entry>
  
  <entry>
    <title>A Typical Design of Database Backfill System</title>
@@ -99,7 +114,7 @@ end
 Unless we have fully backfilled the table, backfill task need to run continuously in the background.
 Three minutes is not necessarily a good gap, but it is always open to change based on actual circumstances.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;require_relative &#39;task_list&#39;
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;require_relative 'task_list'
 
 module DurableBackfill
   class Runner
@@ -216,7 +231,7 @@ end
 
 &lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;module DurableBackfill
   class BackfillNumberOfEmployee &amp;lt; Task
-    self.title = &#39;backfill_number_of_employee&#39;
+    self.title = 'backfill_number_of_employee'
 
     def work(account)
       Rails.cache.write(&quot;durable-backfill-number-of-employee-#{account.id}&quot;, true)
