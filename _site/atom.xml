@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>The blog of Linyao Li</title>
+ <link href="http://example.com/atom.xml" rel="self"/>
+ <link href="http://example.com"/>
+ <updated>2016-03-10T17:48:08-08:00</updated>
+ <id>http://example.com</id>
+ <author>
+   <name>Linyao Li</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>A Typical Design of Database Backfill System</title>
+   <link href="http://example.com/2016/03/07/backfill-systems.html"/>
+   <updated>2016-03-07T00:00:00-08:00</updated>
+   <id>http://example.com/2016/03/07/backfill-systems</id>
+   <content type="html">&lt;p&gt;status: WIP&lt;/p&gt;
+
+&lt;p&gt;At some point, we may need to backfill new columns in a frequently queried table. Assume there are massive amount of
+records, and each record has blah blah..&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#generate-backfill-audits&quot; id=&quot;markdown-toc-generate-backfill-audits&quot;&gt;Generate backfill audits&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#daemon-to-run-backfill-tasks&quot; id=&quot;markdown-toc-daemon-to-run-backfill-tasks&quot;&gt;Daemon to run backfill tasks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#a-general-task&quot; id=&quot;markdown-toc-a-general-task&quot;&gt;A General Task&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#task-list&quot; id=&quot;markdown-toc-task-list&quot;&gt;Task list&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#a-sample-backfill-task&quot; id=&quot;markdown-toc-a-sample-backfill-task&quot;&gt;A sample backfill task&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;generate-backfill-audits&quot;&gt;Generate backfill audits&lt;/h2&gt;
+&lt;p&gt;To maintain durable backfill tasks in the rails application, especially while
+backfilling huge loads of records, we’d like to make these audits trackable, and
+work on them in a specific order.&lt;/p&gt;
+
+&lt;p&gt;For that, we need a table as the following:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;backfill_audits&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;id&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;account_id&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;task&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;created_at&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;started_at&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;completed_at&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;updated_at&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The only notable thing here is, on an extreme case when we are backfilling shits during a migration, new record can be
+inserted, therefore a re-backfill is needed. For this situation, we put a waterline inside the audits marking a period
+to avoid a whole table re-backfilling.&lt;/p&gt;
+
+&lt;p&gt;Since this case does not happen constantly, one day gap is good enough (or extend to even longer depending on the amount of records).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;module DurableBackfill
+  class BackfillAudit &amp;lt; ActiveRecord::Base
+    WATERLINE_ACCOUNT_ID = -10
+
+    default_scope { where(&quot;account_id != #{WATERLINE_ACCOUNT_ID}&quot;) }
+
+    scope :for_task, -&amp;gt;(task_name) { where(task: task_name) }
+    scope :incomplete, -&amp;gt; { where(completed_at: nil) }
+
+    belongs_to :account
+
+    def self.waterline_date(task)
+      unscoped.where(account_id: WATERLINE_ACCOUNT_ID, task: task).first_or_create.created_at + 1.day
+    end
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;daemon-to-run-backfill-tasks&quot;&gt;Daemon to run backfill tasks&lt;/h2&gt;
+
+&lt;p&gt;Before starting the actual backfill task, let’s create backfill audits.
+Unless we have fully backfilled the table, backfill task need to run continuously in the background.
+Three minutes is not necessarily a good gap, but it is always open to change based on actual circumstances.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;require_relative &#39;task_list&#39;
+
+module DurableBackfill
+  class Runner
+    def self.tasks
+      DurableBackfill::Task.descendants
+    end
+
+    def run
+      generate_backfills
+      while true do
+        work_backfills
+        sleep(3.minutes)
+      end
+    end
+
+    def generate_backfills
+      tasks.each do |task|
+        ActiveRecord::Base.on_all_shards do |shard_id|
+          task.create_audits!
+        end
+      end
+    end
+
+    def work_backfills
+      tasks.each do |task|
+        ActiveRecord::Base.on_all_shards do |shard_id|
+          task.audits.incomplete.find_each do |audit|
+            task.new(audit).work_audit
+          end
+        end
+      end
+    end
+
+    private
+
+    def tasks
+      self.class.tasks
+    end
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;a-general-task&quot;&gt;A General Task&lt;/h2&gt;
+
+&lt;p&gt;A waterline account is not a real account, therefore do be aware that its id must not conflict with real account ids.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;module DurableBackfill
+  class Task
+    class RescheduleTask &amp;lt; StandardError ; end
+    WATERLINE_ACCOUNT_ID = -10
+
+    class &amp;lt;&amp;lt; self
+      attr_accessor :title
+
+      def audits
+        DurableBackfill::BackfillAudit.for_task(title)
+      end
+
+      def create_audits!
+        waterline = DurableBackfill::BackfillAudit.waterline_date(title)
+
+        DurableBackfill::BackfillAudit.transaction do
+          created_accounts = DurableBackfill::BackfillAudit.for_task(title).pluck(:account_id).to_set
+
+          Account.shard_local.where(&quot;created_at &amp;lt; ?&quot;, waterline).where(&quot;id != #{Account.system_account_id}&quot;).each do |account|
+            next if created_accounts.include?(account.id)
+
+            DurableBackfill::BackfillAudit.create!(task: title, account: account)
+          end
+        end
+      end
+    end
+
+    def initialize(audit)
+      @audit = audit
+    end
+
+    def work(account)
+      raise &quot;must implement work!&quot;
+    end
+
+    def work_audit
+      @audit.started_at = Time.now
+      if @audit.account(true).shard_local?
+        puts &quot;work on account#{@audit.account.id}&quot;
+        work(@audit.account)
+      end
+
+      @audit.completed_at = Time.now
+      @audit.save!
+    rescue RescheduleTask =&amp;gt; e
+      # leave audit untouched
+    end
+
+    def reschedule!
+      raise RescheduleTask.new
+    end
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;task-list&quot;&gt;Task list&lt;/h2&gt;
+
+&lt;p&gt;We use a tasks folder to keep all actual tasks.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;files = Dir.glob(File.dirname(__FILE__) + &quot;/tasks/*.rb&quot;).each do  |f|
+  require f
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;a-sample-backfill-task&quot;&gt;A sample backfill task&lt;/h2&gt;
+
+&lt;p&gt;Now I’d like to backfill the column number_of_employee in table &lt;code&gt;company&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-ruby&quot;&gt;module DurableBackfill
+  class BackfillNumberOfEmployee &amp;lt; Task
+    self.title = &#39;backfill_number_of_employee&#39;
+
+    def work(account)
+      Rails.cache.write(&quot;durable-backfill-number-of-employee-#{account.id}&quot;, true)
+
+      Company.where(:account_id =&amp;gt; account.id).find_each do |t|
+        t.update_attribute(:number_of_employee, t.count_employee)
+      end
+    end
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+ </entry>
+ 
+ 
+</feed>

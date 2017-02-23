@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linyao Li - A Typical Design of Database Backfill System</title>
+  <meta name="author" content="Linyao Li" />
+  <meta name="description" content="The blog of Linyao Li" />
+  <link rel="canonical" href="http://example.com/2016/03/07/backfill-systems.html" />
+
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="alternate" type="application/atom+xml" title="Linyao Li" href="http://example.com/atom.xml" />
+
+  <link rel="stylesheet" href="/assets/css/all.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-k2/8zcNbxVIh5mnQ52A0r3a6jAgMGxFJFE2707UxGCk= sha512-ZV9KawG2Legkwp3nAlxLIVFudTauWuBpC10uEafMHYL0Sarrz5A7G79kXh5+5+woxQ5HM559XX2UZjMJ36Wplg==" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>Hi.</h1>
+  <a href="/">
+    
+    <img src="http://www.gravatar.com/avatar/62922313da538f31d1760fdf4505c5d6?s=200" id="gravatar" alt="My photo"/>
+    
+  </a>
+  <h2>I'm <a href="/">Linyao Li</a>.</h2>
+  <div id="bio">
+  </div>
+  <div id="social">
+    Follow me:
+<div id="stalker">
+  
+  <a title="lileeyao on Github" href="https://github.com/lileeyao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</div>
+
+  </div>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+      <p class="meta">
+  March 07, 2016 
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">A Typical Design of Database Backfill System</h1>
+
+<div id="post">
+  <p>status: WIP</p>
+
+<p>At some point, we may need to backfill new columns in a frequently queried table. Assume there are massive amount of
+records, and each record has blah blah..</p>
+
+<hr />
+<ul id="markdown-toc">
+  <li><a href="#generate-backfill-audits" id="markdown-toc-generate-backfill-audits">Generate backfill audits</a></li>
+  <li><a href="#daemon-to-run-backfill-tasks" id="markdown-toc-daemon-to-run-backfill-tasks">Daemon to run backfill tasks</a></li>
+  <li><a href="#a-general-task" id="markdown-toc-a-general-task">A General Task</a></li>
+  <li><a href="#task-list" id="markdown-toc-task-list">Task list</a></li>
+  <li><a href="#a-sample-backfill-task" id="markdown-toc-a-sample-backfill-task">A sample backfill task</a></li>
+</ul>
+
+<h2 id="generate-backfill-audits">Generate backfill audits</h2>
+<p>To maintain durable backfill tasks in the rails application, especially while
+backfilling huge loads of records, we’d like to make these audits trackable, and
+work on them in a specific order.</p>
+
+<p>For that, we need a table as the following:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>backfill_audits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+    </tr>
+    <tr>
+      <td>account_id</td>
+    </tr>
+    <tr>
+      <td>task</td>
+    </tr>
+    <tr>
+      <td>created_at</td>
+    </tr>
+    <tr>
+      <td>started_at</td>
+    </tr>
+    <tr>
+      <td>completed_at</td>
+    </tr>
+    <tr>
+      <td>updated_at</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The only notable thing here is, on an extreme case when we are backfilling shits during a migration, new record can be
+inserted, therefore a re-backfill is needed. For this situation, we put a waterline inside the audits marking a period
+to avoid a whole table re-backfilling.</p>
+
+<p>Since this case does not happen constantly, one day gap is good enough (or extend to even longer depending on the amount of records).</p>
+
+<pre><code class="language-ruby">module DurableBackfill
+  class BackfillAudit &lt; ActiveRecord::Base
+    WATERLINE_ACCOUNT_ID = -10
+
+    default_scope { where("account_id != #{WATERLINE_ACCOUNT_ID}") }
+
+    scope :for_task, -&gt;(task_name) { where(task: task_name) }
+    scope :incomplete, -&gt; { where(completed_at: nil) }
+
+    belongs_to :account
+
+    def self.waterline_date(task)
+      unscoped.where(account_id: WATERLINE_ACCOUNT_ID, task: task).first_or_create.created_at + 1.day
+    end
+  end
+end
+</code></pre>
+
+<h2 id="daemon-to-run-backfill-tasks">Daemon to run backfill tasks</h2>
+
+<p>Before starting the actual backfill task, let’s create backfill audits.
+Unless we have fully backfilled the table, backfill task need to run continuously in the background.
+Three minutes is not necessarily a good gap, but it is always open to change based on actual circumstances.</p>
+
+<pre><code class="language-ruby">require_relative 'task_list'
+
+module DurableBackfill
+  class Runner
+    def self.tasks
+      DurableBackfill::Task.descendants
+    end
+
+    def run
+      generate_backfills
+      while true do
+        work_backfills
+        sleep(3.minutes)
+      end
+    end
+
+    def generate_backfills
+      tasks.each do |task|
+        ActiveRecord::Base.on_all_shards do |shard_id|
+          task.create_audits!
+        end
+      end
+    end
+
+    def work_backfills
+      tasks.each do |task|
+        ActiveRecord::Base.on_all_shards do |shard_id|
+          task.audits.incomplete.find_each do |audit|
+            task.new(audit).work_audit
+          end
+        end
+      end
+    end
+
+    private
+
+    def tasks
+      self.class.tasks
+    end
+  end
+end
+</code></pre>
+
+<h2 id="a-general-task">A General Task</h2>
+
+<p>A waterline account is not a real account, therefore do be aware that its id must not conflict with real account ids.</p>
+
+<pre><code class="language-ruby">module DurableBackfill
+  class Task
+    class RescheduleTask &lt; StandardError ; end
+    WATERLINE_ACCOUNT_ID = -10
+
+    class &lt;&lt; self
+      attr_accessor :title
+
+      def audits
+        DurableBackfill::BackfillAudit.for_task(title)
+      end
+
+      def create_audits!
+        waterline = DurableBackfill::BackfillAudit.waterline_date(title)
+
+        DurableBackfill::BackfillAudit.transaction do
+          created_accounts = DurableBackfill::BackfillAudit.for_task(title).pluck(:account_id).to_set
+
+          Account.shard_local.where("created_at &lt; ?", waterline).where("id != #{Account.system_account_id}").each do |account|
+            next if created_accounts.include?(account.id)
+
+            DurableBackfill::BackfillAudit.create!(task: title, account: account)
+          end
+        end
+      end
+    end
+
+    def initialize(audit)
+      @audit = audit
+    end
+
+    def work(account)
+      raise "must implement work!"
+    end
+
+    def work_audit
+      @audit.started_at = Time.now
+      if @audit.account(true).shard_local?
+        puts "work on account#{@audit.account.id}"
+        work(@audit.account)
+      end
+
+      @audit.completed_at = Time.now
+      @audit.save!
+    rescue RescheduleTask =&gt; e
+      # leave audit untouched
+    end
+
+    def reschedule!
+      raise RescheduleTask.new
+    end
+  end
+end
+</code></pre>
+
+<h2 id="task-list">Task list</h2>
+
+<p>We use a tasks folder to keep all actual tasks.</p>
+
+<pre><code class="language-ruby">files = Dir.glob(File.dirname(__FILE__) + "/tasks/*.rb").each do  |f|
+  require f
+end
+</code></pre>
+
+<h2 id="a-sample-backfill-task">A sample backfill task</h2>
+
+<p>Now I’d like to backfill the column number_of_employee in table <code>company</code>.</p>
+
+<pre><code class="language-ruby">module DurableBackfill
+  class BackfillNumberOfEmployee &lt; Task
+    self.title = 'backfill_number_of_employee'
+
+    def work(account)
+      Rails.cache.write("durable-backfill-number-of-employee-#{account.id}", true)
+
+      Company.where(:account_id =&gt; account.id).find_each do |t|
+        t.update_attribute(:number_of_employee, t.count_employee)
+      end
+    end
+  end
+end
+</code></pre>
+
+</div>
+
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+  </ul>
+</div>
+
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and don't necessarily represent my 
+    employer’s positions, strategies or opinions.
+  </p>
+  
+
+  <p>
+    © Linyao Li, 2014 &mdash; built with <a href="http://jekyllrb.com/">Jekyll</a> using <a href="https://github.com/swanson/lagom">Lagom theme</a>
+  </p>
+</div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
