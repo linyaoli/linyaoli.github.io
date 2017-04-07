@@ -4,7 +4,7 @@
  <title>The blog of Linyao Li</title>
  <link href="http://example.com/atom.xml" rel="self"/>
  <link href="http://example.com"/>
- <updated>2017-02-23T16:07:43-08:00</updated>
+ <updated>2017-04-06T23:09:52-07:00</updated>
  <id>http://example.com</id>
  <author>
    <name>Linyao Li</name>
@@ -13,10 +13,122 @@
 
  
  <entry>
-   <title></title>
-   <link href="http://example.com/2017/02/23/2017-02-23-nginx-add-header.html"/>
-   <updated>2017-02-23T16:07:43-08:00</updated>
-   <id>http://example.com/2017/02/23/2017-02-23-nginx-add-header</id>
+   <title>Scalability Rules</title>
+   <link href="http://example.com/2017/04/06/scalability-rules.html"/>
+   <updated>2017-04-06T00:00:00-07:00</updated>
+   <id>http://example.com/2017/04/06/scalability-rules</id>
+   <content type="html">&lt;p&gt;This post is a note/headline for reading book Scalability Rules, so in the future I can look back
+to this rather than finding the book. If you find this interesting, go search &lt;a href=&quot;https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&amp;amp;field-keywords=scalability+rules&quot;&gt;Scalability Rules&lt;/a&gt;. Great book.&lt;/p&gt;
+
+&lt;p&gt;Before all of these below, please devote to the bible of scalable system &lt;a href=&quot;https://en.wikipedia.org/wiki/CAP_theorem&quot;&gt;CAP&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#i-reduce-the-equation&quot; id=&quot;markdown-toc-i-reduce-the-equation&quot;&gt;I. Reduce the equation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ii-distribute-the-work&quot; id=&quot;markdown-toc-ii-distribute-the-work&quot;&gt;II. Distribute the work&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#iii-design-to-scale-out-horizontally&quot; id=&quot;markdown-toc-iii-design-to-scale-out-horizontally&quot;&gt;III. Design to scale out horizontally&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#iv-use-the-right-tools&quot; id=&quot;markdown-toc-iv-use-the-right-tools&quot;&gt;IV. Use the right tools&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#v-dont-duplicate-your-work&quot; id=&quot;markdown-toc-v-dont-duplicate-your-work&quot;&gt;V. Don’t duplicate your work&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#vi-use-caching-aggressively-damn-i-love-it&quot; id=&quot;markdown-toc-vi-use-caching-aggressively-damn-i-love-it&quot;&gt;VI. Use caching aggressively. Damn I love it.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;i-reduce-the-equation&quot;&gt;I. Reduce the equation&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Don’t overengineer the solution. Complex systems result in costly effort and maintaince, decompose complex requiments into smaller systems, and make them sharable and reusable.&lt;/li&gt;
+  &lt;li&gt;Design scale into solution. Design to 20x capacity, implemenet for 3x capacity, deploy for ~1.5x capacity.&lt;/li&gt;
+  &lt;li&gt;Simply the solution 3 times over(Pareto Principle). This falls into the Rule(1), but remember simplification is not necessarily considered as always good.&lt;/li&gt;
+  &lt;li&gt;Reduce DNS lookups.&lt;/li&gt;
+  &lt;li&gt;Reduce objects where possible. Frontend stuffs.&lt;/li&gt;
+  &lt;li&gt;Use homogenous networks. Hardware.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;ii-distribute-the-work&quot;&gt;II. Distribute the work&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://ranjithabalaraman.files.wordpress.com/2014/10/scaledb.png&quot; alt=&quot;three axes of scale&quot; /&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Design to clone things(x-axis). Or horizontal scalability, essentially the duplication of services. This is the most important ideology in scalability I’d say.
+    &lt;ul&gt;
+      &lt;li&gt;For services, ensure it is logically simple(use standardized interface e.g. RESTful/RPC) and easy to clone, use load balancer.&lt;/li&gt;
+      &lt;li&gt;For databases, normally used when Read » Write. Master-Slave / Consistent Hashing etc. note &lt;a href=&quot;https://en.wikipedia.org/wiki/ACID&quot;&gt;ACID&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Design to split different things(y-axis). Which I don’t care much.&lt;/li&gt;
+  &lt;li&gt;Design to split similar things(z-axis). ..Either.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;iii-design-to-scale-out-horizontally&quot;&gt;III. Design to scale out horizontally&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Design your solution to scale out, not just up.
+    &lt;ul&gt;
+      &lt;li&gt;Scaling out means the replication of services.&lt;/li&gt;
+      &lt;li&gt;Scaling up means upgrade of computing resources.
+  This is really just a duplicate from Rule(7). meh.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Use commodiity systems. Be cost-effective.&lt;/li&gt;
+  &lt;li&gt;Scale out your data centers. This is more of a concern on availability and failover, so always prepare for multiple data centers. Models may vary.&lt;/li&gt;
+  &lt;li&gt;Design to leverage the cloud. e.g store unimportant files in S3 (I will never save important data in S3).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;iv-use-the-right-tools&quot;&gt;IV. Use the right tools&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Use databases appropriately.
+    &lt;ul&gt;
+      &lt;li&gt;Use RDBMS for cross-table lookup. e.g. MySQL.&lt;/li&gt;
+      &lt;li&gt;Use NoSQL for simple R/W key-value queries. e.g. for great scalability, Cassandra; for grete &lt;a href=&quot;https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type&quot;&gt;CRDT&lt;/a&gt; support, Riak; for light weight, LevelDB. There are tons of options, the world of database is heaven.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Don’t abusively use firewalls, it makes network slow. Put firewall only in critical path.&lt;/li&gt;
+  &lt;li&gt;It is never too less for logging. Use reliable and fast tool such as &lt;a href=&quot;https://github.com/zendesk/maxwell&quot;&gt;Maxwell&lt;/a&gt; for aggregation, and make it well rotated.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;v-dont-duplicate-your-work&quot;&gt;V. Don’t duplicate your work&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Don’t check your work. I’d say avoid duplicated data validation, act upon failures.&lt;/li&gt;
+  &lt;li&gt;Reduce redirecting traffic. This only applies for HTML level, per se. Traffic redirection is key in server configuration and load balancing, especially for inter-service traffic.&lt;/li&gt;
+  &lt;li&gt;Alleviate temporal constraints.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;vi-use-caching-aggressively-damn-i-love-it&quot;&gt;VI. Use caching aggressively. Damn I love it.&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Leverage CDN.&lt;/li&gt;
+  &lt;li&gt;Use &lt;code&gt;Expires&lt;/code&gt; headers. HTML &lt;a href=&quot;https://en.wikipedia.org/wiki/List_of_HTTP_header_fields&quot;&gt;headers&lt;/a&gt; offer more than you could ever imagine.&lt;/li&gt;
+  &lt;li&gt;Cache Ajax calls. Use &lt;code&gt;Last-Modified&lt;/code&gt;, &lt;code&gt;Cache-Control&lt;/code&gt; and &lt;code&gt;Expires&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Leverage page caches. &lt;a href=&quot;https://www.nginx.com/resources/glossary/reverse-proxy-server/&quot;&gt;Reverse proxy&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Utilize application caches. Cache whatever users mostly request, find the best balance between performance and cost.&lt;/li&gt;
+  &lt;li&gt;Make use of object caches(aka in-memory cache).&lt;/li&gt;
+  &lt;li&gt;Put object caches on their own tier. Though I regretly did this mutiple times, caching should never be embedded with crtical path. i.e. whenever caching fails, request should always be properly forwarded to database. Generally, a caching service should sit between api layer and service layer(which operates database commands).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;NEXT: Learn from mistakes&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>mocha test exceeds timeout</title>
+   <link href="http://example.com/2017/03/23/mocha-timeout.html"/>
+   <updated>2017-03-23T00:00:00-07:00</updated>
+   <id>http://example.com/2017/03/23/mocha-timeout</id>
+   <content type="html">&lt;p&gt;For the following case, you may see macha test exceeds timeout even with &lt;code&gt;timeout(6000)&lt;/code&gt; setup.
+Be sure to resolve promise at the end setTimeout.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;it('blah', () =&amp;gt; ) {
+  this.timeout(6000)
+  return new Promise((resolve) =&amp;gt; {
+    setTimeout(() =&amp;gt; {
+      helper.request().get('/testurl/' + id)
+      .then()//whatever
+    resolve() &amp;lt;=== don't forget this!
+    }, 5000)
+  })
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>nginx's add_header is not working</title>
+   <link href="http://example.com/2017/02/23/nginx-add-header.html"/>
+   <updated>2017-02-23T00:00:00-08:00</updated>
+   <id>http://example.com/2017/02/23/nginx-add-header</id>
    <content type="html">&lt;p&gt;Just in case anyone turns into a clusterfuck that:
 NO, stackoverflow doesn’t help!(just like me)
 try this:&lt;/p&gt;
