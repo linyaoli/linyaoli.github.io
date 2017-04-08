@@ -4,7 +4,7 @@
  <title>The blog of Linyao Li</title>
  <link href="http://example.com/atom.xml" rel="self"/>
  <link href="http://example.com"/>
- <updated>2017-04-06T23:09:52-07:00</updated>
+ <updated>2017-04-07T22:37:19-07:00</updated>
  <id>http://example.com</id>
  <author>
    <name>Linyao Li</name>
@@ -30,6 +30,9 @@ to this rather than finding the book. If you find this interesting, go search &l
   &lt;li&gt;&lt;a href=&quot;#iv-use-the-right-tools&quot; id=&quot;markdown-toc-iv-use-the-right-tools&quot;&gt;IV. Use the right tools&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#v-dont-duplicate-your-work&quot; id=&quot;markdown-toc-v-dont-duplicate-your-work&quot;&gt;V. Don’t duplicate your work&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#vi-use-caching-aggressively-damn-i-love-it&quot; id=&quot;markdown-toc-vi-use-caching-aggressively-damn-i-love-it&quot;&gt;VI. Use caching aggressively. Damn I love it.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#vii-learn-from-mistakes&quot; id=&quot;markdown-toc-vii-learn-from-mistakes&quot;&gt;VII. Learn from mistakes&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#viii-database-rules&quot; id=&quot;markdown-toc-viii-database-rules&quot;&gt;VIII. Database rules&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ix-design-for-fault-tolerance-and-graceful-failure&quot; id=&quot;markdown-toc-ix-design-for-fault-tolerance-and-graceful-failure&quot;&gt;IX. Design for fault tolerance and graceful failure&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;i-reduce-the-equation&quot;&gt;I. Reduce the equation&lt;/h2&gt;
@@ -99,7 +102,48 @@ to this rather than finding the book. If you find this interesting, go search &l
   &lt;li&gt;Put object caches on their own tier. Though I regretly did this mutiple times, caching should never be embedded with crtical path. i.e. whenever caching fails, request should always be properly forwarded to database. Generally, a caching service should sit between api layer and service layer(which operates database commands).&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;NEXT: Learn from mistakes&lt;/p&gt;
+&lt;h2 id=&quot;vii-learn-from-mistakes&quot;&gt;VII. Learn from mistakes&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Don’t rely on QA, period.&lt;/li&gt;
+  &lt;li&gt;Design for rollback-ready.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;viii-database-rules&quot;&gt;VIII. Database rules&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Be aware of costly relationships. Cross-table queries are expensive.&lt;/li&gt;
+  &lt;li&gt;Use the right type of database lock.
+    &lt;ul&gt;
+      &lt;li&gt;Implicit locks. Created automatically by system while performing a transaction.&lt;/li&gt;
+      &lt;li&gt;Explicit locks. Locks defined by user during the interaction between user and db.&lt;/li&gt;
+      &lt;li&gt;Row lock locks a row from update, read and write.&lt;/li&gt;
+      &lt;li&gt;Page locks a row or a group of row.&lt;/li&gt;
+      &lt;li&gt;Extent locks a group of pages.&lt;/li&gt;
+      &lt;li&gt;Table lock.&lt;/li&gt;
+      &lt;li&gt;Database lock.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Don’t use multi-phase commits protocols. &lt;a href=&quot;https://en.wikipedia.org/wiki/Two-phase_commit_protocol&quot;&gt;2-PC protocol&lt;/a&gt; is mainly introduced to distributed process, but before the server returns ack,it hangs PENDING until the transaction is done.&lt;/li&gt;
+  &lt;li&gt;Try not to use &lt;code&gt;SELECT FOR UPDATE&lt;/code&gt;. &lt;code&gt;SELECT&lt;/code&gt; is supposed to be fast, but &lt;code&gt;UPDATE&lt;/code&gt; locks row and is slow, so it’s drinking soda with a fine goblet.&lt;/li&gt;
+  &lt;li&gt;Don’t &lt;code&gt;SELECT&lt;/code&gt; everthing. Avoid &lt;code&gt;SELECT *&lt;/code&gt;, and ask only for what you need.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;ix-design-for-fault-tolerance-and-graceful-failure&quot;&gt;IX. Design for fault tolerance and graceful failure&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Design using fault isolative swimlanes, basically be careful with any comm between swimlanes.
+  type of splits:
+    &lt;ul&gt;
+      &lt;li&gt;Pod. Self-contained sets of functionality containing app servers and persistent storage. Essentially it is equal to a data center.&lt;/li&gt;
+      &lt;li&gt;Cluster / Pool. A group of servers which have similar functionalities and serve similar customer groups.&lt;/li&gt;
+      &lt;li&gt;Shard. Horizontal partitions of databases or search engines.&lt;/li&gt;
+      &lt;li&gt;Swimlane. A fault isolation domain.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;NEXT: fault isolation&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </content>
  </entry>
  

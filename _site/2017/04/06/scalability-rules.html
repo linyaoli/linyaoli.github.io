@@ -92,6 +92,9 @@ to this rather than finding the book. If you find this interesting, go search <a
   <li><a href="#iv-use-the-right-tools" id="markdown-toc-iv-use-the-right-tools">IV. Use the right tools</a></li>
   <li><a href="#v-dont-duplicate-your-work" id="markdown-toc-v-dont-duplicate-your-work">V. Don’t duplicate your work</a></li>
   <li><a href="#vi-use-caching-aggressively-damn-i-love-it" id="markdown-toc-vi-use-caching-aggressively-damn-i-love-it">VI. Use caching aggressively. Damn I love it.</a></li>
+  <li><a href="#vii-learn-from-mistakes" id="markdown-toc-vii-learn-from-mistakes">VII. Learn from mistakes</a></li>
+  <li><a href="#viii-database-rules" id="markdown-toc-viii-database-rules">VIII. Database rules</a></li>
+  <li><a href="#ix-design-for-fault-tolerance-and-graceful-failure" id="markdown-toc-ix-design-for-fault-tolerance-and-graceful-failure">IX. Design for fault tolerance and graceful failure</a></li>
 </ul>
 
 <h2 id="i-reduce-the-equation">I. Reduce the equation</h2>
@@ -161,7 +164,48 @@ to this rather than finding the book. If you find this interesting, go search <a
   <li>Put object caches on their own tier. Though I regretly did this mutiple times, caching should never be embedded with crtical path. i.e. whenever caching fails, request should always be properly forwarded to database. Generally, a caching service should sit between api layer and service layer(which operates database commands).</li>
 </ol>
 
-<p>NEXT: Learn from mistakes</p>
+<h2 id="vii-learn-from-mistakes">VII. Learn from mistakes</h2>
+<ol>
+  <li>Don’t rely on QA, period.</li>
+  <li>Design for rollback-ready.</li>
+</ol>
+
+<h2 id="viii-database-rules">VIII. Database rules</h2>
+<ol>
+  <li>Be aware of costly relationships. Cross-table queries are expensive.</li>
+  <li>Use the right type of database lock.
+    <ul>
+      <li>Implicit locks. Created automatically by system while performing a transaction.</li>
+      <li>Explicit locks. Locks defined by user during the interaction between user and db.</li>
+      <li>Row lock locks a row from update, read and write.</li>
+      <li>Page locks a row or a group of row.</li>
+      <li>Extent locks a group of pages.</li>
+      <li>Table lock.</li>
+      <li>Database lock.</li>
+    </ul>
+  </li>
+  <li>Don’t use multi-phase commits protocols. <a href="https://en.wikipedia.org/wiki/Two-phase_commit_protocol">2-PC protocol</a> is mainly introduced to distributed process, but before the server returns ack,it hangs PENDING until the transaction is done.</li>
+  <li>Try not to use <code>SELECT FOR UPDATE</code>. <code>SELECT</code> is supposed to be fast, but <code>UPDATE</code> locks row and is slow, so it’s drinking soda with a fine goblet.</li>
+  <li>Don’t <code>SELECT</code> everthing. Avoid <code>SELECT *</code>, and ask only for what you need.</li>
+</ol>
+
+<h2 id="ix-design-for-fault-tolerance-and-graceful-failure">IX. Design for fault tolerance and graceful failure</h2>
+<ol>
+  <li>Design using fault isolative swimlanes, basically be careful with any comm between swimlanes.
+  type of splits:
+    <ul>
+      <li>Pod. Self-contained sets of functionality containing app servers and persistent storage. Essentially it is equal to a data center.</li>
+      <li>Cluster / Pool. A group of servers which have similar functionalities and serve similar customer groups.</li>
+      <li>Shard. Horizontal partitions of databases or search engines.</li>
+      <li>Swimlane. A fault isolation domain.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>NEXT: fault isolation</p>
+<ol>
+  <li></li>
+</ol>
 
 </div>
 

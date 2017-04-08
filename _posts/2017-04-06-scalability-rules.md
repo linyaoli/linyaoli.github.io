@@ -66,4 +66,34 @@ VI. Use caching aggressively. Damn I love it.
 25. Make use of object caches(aka in-memory cache).
 26. Put object caches on their own tier. Though I regretly did this mutiple times, caching should never be embedded with crtical path. i.e. whenever caching fails, request should always be properly forwarded to database. Generally, a caching service should sit between api layer and service layer(which operates database commands). 
 
-NEXT: Learn from mistakes
+VII. Learn from mistakes
+----------------------
+1. Don't rely on QA, period.
+2. Design for rollback-ready.
+
+VIII. Database rules 
+----------------------
+1. Be aware of costly relationships. Cross-table queries are expensive.
+2. Use the right type of database lock.
+  - Implicit locks. Created automatically by system while performing a transaction.
+  - Explicit locks. Locks defined by user during the interaction between user and db.
+  - Row lock locks a row from update, read and write.
+  - Page locks a row or a group of row.
+  - Extent locks a group of pages.
+  - Table lock.
+  - Database lock.
+3. Don't use multi-phase commits protocols. [2-PC protocol](https://en.wikipedia.org/wiki/Two-phase_commit_protocol) is mainly introduced to distributed process, but before the server returns ack,it hangs PENDING until the transaction is done.
+4. Try not to use `SELECT FOR UPDATE`. `SELECT` is supposed to be fast, but `UPDATE` locks row and is slow, so it's drinking soda with a fine goblet. 
+5. Don't `SELECT` everthing. Avoid `SELECT *`, and ask only for what you need.
+
+IX. Design for fault tolerance and graceful failure
+----------------------
+36. Design using fault isolative swimlanes, basically be careful with any comm between swimlanes.
+  type of splits:
+  - Pod. Self-contained sets of functionality containing app servers and persistent storage. Essentially it is equal to a data center.
+  - Cluster / Pool. A group of servers which have similar functionalities and serve similar customer groups. 
+  - Shard. Horizontal partitions of databases or search engines.
+  - Swimlane. A fault isolation domain.
+
+  NEXT: fault isolation
+37. 
