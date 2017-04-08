@@ -95,6 +95,8 @@ to this rather than finding the book. If you find this interesting, go search <a
   <li><a href="#vii-learn-from-mistakes" id="markdown-toc-vii-learn-from-mistakes">VII. Learn from mistakes</a></li>
   <li><a href="#viii-database-rules" id="markdown-toc-viii-database-rules">VIII. Database rules</a></li>
   <li><a href="#ix-design-for-fault-tolerance-and-graceful-failure" id="markdown-toc-ix-design-for-fault-tolerance-and-graceful-failure">IX. Design for fault tolerance and graceful failure</a></li>
+  <li><a href="#x-avoid-or-distribute-state" id="markdown-toc-x-avoid-or-distribute-state">X. Avoid or distribute state.</a></li>
+  <li><a href="#xi-asynchronous-communication-and-message-buses" id="markdown-toc-xi-asynchronous-communication-and-message-buses">XI. Asynchronous communication and message buses.</a></li>
 </ul>
 
 <h2 id="i-reduce-the-equation">I. Reduce the equation</h2>
@@ -202,10 +204,36 @@ to this rather than finding the book. If you find this interesting, go search <a
   </li>
 </ol>
 
-<p>NEXT: fault isolation</p>
+<p>fault isolation principles</p>
+<ul>
+  <li>Share nothing. However, router, load balancer are acceptable. But database and servers should never be shared.</li>
+  <li>No sync calls between swimlanes.</li>
+  <li>Limit async calls between swimlanes.</li>
+  <li>Use timeouts and wire-on/off with async calls.</li>
+</ul>
+
 <ol>
-  <li></li>
+  <li>Never trust single points of failure. Maximize availability through multiple instances.</li>
+  <li>Avoid putting systems in series.
+    <ul>
+      <li><img src="http://www.physics247.com/physics-tutorial/images/seriescircuit.jpg" alt="circuit of series" /></li>
+    </ul>
+  </li>
+  <li>Ensure you can wire-on/off functions. For risky services, it should be able to be switched off during bad moment. Introducing <a href="https://github.com/zendesk/arturo">Zendesk Arturo</a> .</li>
 </ol>
+
+<h2 id="x-avoid-or-distribute-state">X. Avoid or distribute state.</h2>
+<ol>
+  <li>Strive for statelessness. Use stateless implementation (<a href="https://en.wikipedia.org/wiki/Stateless_protocol">what is statelessness?</a>).</li>
+  <li>Maintain sessions(cookies) in browser whenever possible. That is, avoid keeping those in servers.</li>
+  <li>Make use of a distributed cache for state. Use when cannot store session data in browser. This is because commonly session data or metadata are frequently requested.</li>
+</ol>
+
+<h2 id="xi-asynchronous-communication-and-message-buses">XI. Asynchronous communication and message buses.</h2>
+<ol>
+  <li>Communicate asynchronously as much as possible</li>
+</ol>
+
 
 </div>
 

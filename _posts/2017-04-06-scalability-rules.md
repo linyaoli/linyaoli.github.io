@@ -95,5 +95,25 @@ IX. Design for fault tolerance and graceful failure
   - Shard. Horizontal partitions of databases or search engines.
   - Swimlane. A fault isolation domain.
 
-  NEXT: fault isolation
-37. 
+  fault isolation principles
+  - Share nothing. However, router, load balancer are acceptable. But database and servers should never be shared.
+  - No sync calls between swimlanes.
+  - Limit async calls between swimlanes.
+  - Use timeouts and wire-on/off with async calls.
+
+37. Never trust single points of failure. Maximize availability through multiple instances.
+38. Avoid putting systems in series. 
+    - ![circuit of series](http://www.physics247.com/physics-tutorial/images/seriescircuit.jpg) 
+
+39. Ensure you can wire-on/off functions. For risky services, it should be able to be switched off during bad moment. Introducing [Zendesk Arturo](https://github.com/zendesk/arturo) .
+
+X. Avoid or distribute state.
+----------------------
+40. Strive for statelessness. Use stateless implementation ([what is statelessness?](https://en.wikipedia.org/wiki/Stateless_protocol)).
+41. Maintain sessions(cookies) in browser whenever possible. That is, avoid keeping those in servers.
+42. Make use of a distributed cache for state. Use when cannot store session data in browser. This is because commonly session data or metadata are frequently requested.
+
+XI. Asynchronous communication and message buses.
+----------------------
+43. Communicate asynchronously as much as possible
+

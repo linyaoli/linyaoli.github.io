@@ -4,7 +4,7 @@
  <title>The blog of Linyao Li</title>
  <link href="http://example.com/atom.xml" rel="self"/>
  <link href="http://example.com"/>
- <updated>2017-04-07T22:37:19-07:00</updated>
+ <updated>2017-04-08T14:47:57-07:00</updated>
  <id>http://example.com</id>
  <author>
    <name>Linyao Li</name>
@@ -33,6 +33,8 @@ to this rather than finding the book. If you find this interesting, go search &l
   &lt;li&gt;&lt;a href=&quot;#vii-learn-from-mistakes&quot; id=&quot;markdown-toc-vii-learn-from-mistakes&quot;&gt;VII. Learn from mistakes&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#viii-database-rules&quot; id=&quot;markdown-toc-viii-database-rules&quot;&gt;VIII. Database rules&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#ix-design-for-fault-tolerance-and-graceful-failure&quot; id=&quot;markdown-toc-ix-design-for-fault-tolerance-and-graceful-failure&quot;&gt;IX. Design for fault tolerance and graceful failure&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#x-avoid-or-distribute-state&quot; id=&quot;markdown-toc-x-avoid-or-distribute-state&quot;&gt;X. Avoid or distribute state.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#xi-asynchronous-communication-and-message-buses&quot; id=&quot;markdown-toc-xi-asynchronous-communication-and-message-buses&quot;&gt;XI. Asynchronous communication and message buses.&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;i-reduce-the-equation&quot;&gt;I. Reduce the equation&lt;/h2&gt;
@@ -140,10 +142,36 @@ to this rather than finding the book. If you find this interesting, go search &l
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;NEXT: fault isolation&lt;/p&gt;
+&lt;p&gt;fault isolation principles&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Share nothing. However, router, load balancer are acceptable. But database and servers should never be shared.&lt;/li&gt;
+  &lt;li&gt;No sync calls between swimlanes.&lt;/li&gt;
+  &lt;li&gt;Limit async calls between swimlanes.&lt;/li&gt;
+  &lt;li&gt;Use timeouts and wire-on/off with async calls.&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;ol&gt;
-  &lt;li&gt;&lt;/li&gt;
+  &lt;li&gt;Never trust single points of failure. Maximize availability through multiple instances.&lt;/li&gt;
+  &lt;li&gt;Avoid putting systems in series.
+    &lt;ul&gt;
+      &lt;li&gt;&lt;img src=&quot;http://www.physics247.com/physics-tutorial/images/seriescircuit.jpg&quot; alt=&quot;circuit of series&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Ensure you can wire-on/off functions. For risky services, it should be able to be switched off during bad moment. Introducing &lt;a href=&quot;https://github.com/zendesk/arturo&quot;&gt;Zendesk Arturo&lt;/a&gt; .&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;h2 id=&quot;x-avoid-or-distribute-state&quot;&gt;X. Avoid or distribute state.&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Strive for statelessness. Use stateless implementation (&lt;a href=&quot;https://en.wikipedia.org/wiki/Stateless_protocol&quot;&gt;what is statelessness?&lt;/a&gt;).&lt;/li&gt;
+  &lt;li&gt;Maintain sessions(cookies) in browser whenever possible. That is, avoid keeping those in servers.&lt;/li&gt;
+  &lt;li&gt;Make use of a distributed cache for state. Use when cannot store session data in browser. This is because commonly session data or metadata are frequently requested.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;xi-asynchronous-communication-and-message-buses&quot;&gt;XI. Asynchronous communication and message buses.&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Communicate asynchronously as much as possible&lt;/li&gt;
+&lt;/ol&gt;
+
 </content>
  </entry>
  
