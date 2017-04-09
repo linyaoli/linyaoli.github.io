@@ -97,6 +97,7 @@ to this rather than finding the book. If you find this interesting, go search <a
   <li><a href="#ix-design-for-fault-tolerance-and-graceful-failure" id="markdown-toc-ix-design-for-fault-tolerance-and-graceful-failure">IX. Design for fault tolerance and graceful failure</a></li>
   <li><a href="#x-avoid-or-distribute-state" id="markdown-toc-x-avoid-or-distribute-state">X. Avoid or distribute state.</a></li>
   <li><a href="#xi-asynchronous-communication-and-message-buses" id="markdown-toc-xi-asynchronous-communication-and-message-buses">XI. Asynchronous communication and message buses.</a></li>
+  <li><a href="#xii-miscellaneous-rules" id="markdown-toc-xii-miscellaneous-rules">XII. Miscellaneous rules</a></li>
 </ul>
 
 <h2 id="i-reduce-the-equation">I. Reduce the equation</h2>
@@ -231,7 +232,18 @@ to this rather than finding the book. If you find this interesting, go search <a
 
 <h2 id="xi-asynchronous-communication-and-message-buses">XI. Asynchronous communication and message buses.</h2>
 <ol>
-  <li>Communicate asynchronously as much as possible</li>
+  <li>Communicate asynchronously as much as possible.</li>
+  <li>Ensure your message bus can scale.</li>
+  <li>Avoid overcrowding your message bus.</li>
+</ol>
+
+<h2 id="xii-miscellaneous-rules">XII. Miscellaneous rules</h2>
+<ol>
+  <li>Be wary of scaling through 3rd parties.</li>
+  <li>Purge, archive, and cost-justify storage.</li>
+  <li>Remove businesses intelligence from transaction processing.</li>
+  <li>Design your application to be monitored. <del>nagios</del> -&gt; datadog.</li>
+  <li>Be competent.</li>
 </ol>
 
 

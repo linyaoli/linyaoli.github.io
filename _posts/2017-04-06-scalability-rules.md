@@ -115,5 +115,15 @@ X. Avoid or distribute state.
 
 XI. Asynchronous communication and message buses.
 ----------------------
-43. Communicate asynchronously as much as possible
+43. Communicate asynchronously as much as possible.
+44. Ensure your message bus can scale.
+45. Avoid overcrowding your message bus.
+
+XII. Miscellaneous rules
+----------------------
+46. Be wary of scaling through 3rd parties.
+47. Purge, archive, and cost-justify storage.
+48. Remove businesses intelligence from transaction processing.
+49. Design your application to be monitored. ~~nagios~~ -> datadog.
+50. Be competent. 
 

@@ -4,7 +4,7 @@
  <title>The blog of Linyao Li</title>
  <link href="http://example.com/atom.xml" rel="self"/>
  <link href="http://example.com"/>
- <updated>2017-04-08T14:47:57-07:00</updated>
+ <updated>2017-04-08T22:49:47-07:00</updated>
  <id>http://example.com</id>
  <author>
    <name>Linyao Li</name>
@@ -35,6 +35,7 @@ to this rather than finding the book. If you find this interesting, go search &l
   &lt;li&gt;&lt;a href=&quot;#ix-design-for-fault-tolerance-and-graceful-failure&quot; id=&quot;markdown-toc-ix-design-for-fault-tolerance-and-graceful-failure&quot;&gt;IX. Design for fault tolerance and graceful failure&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#x-avoid-or-distribute-state&quot; id=&quot;markdown-toc-x-avoid-or-distribute-state&quot;&gt;X. Avoid or distribute state.&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#xi-asynchronous-communication-and-message-buses&quot; id=&quot;markdown-toc-xi-asynchronous-communication-and-message-buses&quot;&gt;XI. Asynchronous communication and message buses.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#xii-miscellaneous-rules&quot; id=&quot;markdown-toc-xii-miscellaneous-rules&quot;&gt;XII. Miscellaneous rules&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;i-reduce-the-equation&quot;&gt;I. Reduce the equation&lt;/h2&gt;
@@ -169,7 +170,18 @@ to this rather than finding the book. If you find this interesting, go search &l
 
 &lt;h2 id=&quot;xi-asynchronous-communication-and-message-buses&quot;&gt;XI. Asynchronous communication and message buses.&lt;/h2&gt;
 &lt;ol&gt;
-  &lt;li&gt;Communicate asynchronously as much as possible&lt;/li&gt;
+  &lt;li&gt;Communicate asynchronously as much as possible.&lt;/li&gt;
+  &lt;li&gt;Ensure your message bus can scale.&lt;/li&gt;
+  &lt;li&gt;Avoid overcrowding your message bus.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;xii-miscellaneous-rules&quot;&gt;XII. Miscellaneous rules&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Be wary of scaling through 3rd parties.&lt;/li&gt;
+  &lt;li&gt;Purge, archive, and cost-justify storage.&lt;/li&gt;
+  &lt;li&gt;Remove businesses intelligence from transaction processing.&lt;/li&gt;
+  &lt;li&gt;Design your application to be monitored. &lt;del&gt;nagios&lt;/del&gt; -&amp;gt; datadog.&lt;/li&gt;
+  &lt;li&gt;Be competent.&lt;/li&gt;
 &lt;/ol&gt;
 
 </content>
