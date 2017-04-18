@@ -4,13 +4,78 @@
  <title>The blog of Linyao Li</title>
  <link href="http://example.com/atom.xml" rel="self"/>
  <link href="http://example.com"/>
- <updated>2017-04-08T22:49:47-07:00</updated>
+ <updated>2017-04-17T17:38:51-07:00</updated>
  <id>http://example.com</id>
  <author>
    <name>Linyao Li</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Kafka paper Q&A</title>
+   <link href="http://example.com/2017/04/11/kafka-paper.html"/>
+   <updated>2017-04-11T00:00:00-07:00</updated>
+   <id>http://example.com/2017/04/11/kafka-paper</id>
+   <content type="html">&lt;p&gt;This post briefly discusses some key aspects in Kafka paper.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Q: What’s the correspondence between partition and topic?&lt;/p&gt;
+
+&lt;p&gt;A: Each topic can have one or many partitions, each partition has only one topic.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Q: Why does message use offset instead of id?&lt;/p&gt;
+
+&lt;p&gt;A: Offset essentially has the same functionality of an id. It is unique and increasing(not consecutive). The offset of next message is to add the length of current message to its current offset.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Q: What’s the correspondence between a consumer and partition?&lt;/p&gt;
+
+&lt;p&gt;A: A consumer always consumes messages from a particular partition sequentially.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Q: Why does Kafka not use fancy caching system to cache messages?&lt;/p&gt;
+
+&lt;p&gt;A: Kafka relies on file system page cache. Because page cache is by no doubt extremely effective and independent from Kafka application process, Kafka messages can stay alive in cache even when a broker process is restarted. It also immensely reduces load for Java GC.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Q: Why is broker stateless?&lt;/p&gt;
+
+&lt;p&gt;A: Broker does not maintain how much each consumer has consumed. This makes broker less complicated and more efficient. Broker removes messages from queue on time-basis.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Q: What’s the correspondence among consumer groups, consumers and topics?&lt;/p&gt;
+
+&lt;p&gt;A: A conumer group consists of one or many consumers, which consume a set of topics. However each message can only be consumed by one consumer.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Q: What does “a partition is the smallest unit of parallelism” mean?&lt;/p&gt;
+
+&lt;p&gt;A: At a given time, all messages within a parition can only be consumed by a single consumer within each consumer group. If a topic’s messages need more consumers, we simply overpartition the topic.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Q: What does Zookeeper do in Kafka?&lt;/p&gt;
+
+&lt;p&gt;A: 1) detecting the addition and removal of brokers and consumers. 2) triggering a rebalance process in each consumer when above events happen. 3) maintaining the current offset in each partition. 4) stores brokers’ registry information, e.g. host and port, set of topics and corresponding parititon keys.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Q: What does rebalance process do?&lt;/p&gt;
+
+&lt;p&gt;A: Say consumer C in group G is deleted, Kafka will start a rebalance, it first remove C’s registry on topics/partiitons, then for each topic of C, the system uniformly distributes its corresponding partitions to other consumers in group G which also subscribes this topic.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Q: Why does Kafka use at-least-once delivery instead of exactly-once delivery?&lt;/p&gt;
+
+&lt;p&gt;A: Exactly-once delivery requires two-phase commit protocol, it’s simply less cost-effective. In addition, because there is no guarentee to avoid duplication, one must implement its own strategy.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;These are simply extractions from Kafka paper, there are many new stuffs after that, esp. replication, firewall and more.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Scalability Rules</title>

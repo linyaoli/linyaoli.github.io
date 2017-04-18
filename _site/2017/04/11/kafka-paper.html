@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linyao Li - Kafka paper Q&A</title>
+  <meta name="author" content="Linyao Li" />
+  <meta name="description" content="The blog of Linyao Li" />
+  <link rel="canonical" href="http://example.com/2017/04/11/kafka-paper.html" />
+
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="alternate" type="application/atom+xml" title="Linyao Li" href="http://example.com/atom.xml" />
+
+  <link rel="stylesheet" href="/assets/css/all.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-k2/8zcNbxVIh5mnQ52A0r3a6jAgMGxFJFE2707UxGCk= sha512-ZV9KawG2Legkwp3nAlxLIVFudTauWuBpC10uEafMHYL0Sarrz5A7G79kXh5+5+woxQ5HM559XX2UZjMJ36Wplg==" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <h1>Hi.</h1>
+  <a href="/">
+    
+    <img src="http://www.gravatar.com/avatar/62922313da538f31d1760fdf4505c5d6?s=200" id="gravatar" alt="My photo"/>
+    
+  </a>
+  <h2>I'm <a href="/">Linyao Li</a>.</h2>
+  <div id="bio">
+  </div>
+  <div id="social">
+    Follow me:
+<div id="stalker">
+  
+  <a title="lileeyao on Github" href="https://github.com/lileeyao">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</div>
+
+  </div>
+</nav>
+
+    </div>
+
+    <div class="eleven columns content">
+      <p class="meta">
+  April 11, 2017 
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">Kafka paper Q&A</h1>
+
+<div id="post">
+  <p>This post briefly discusses some key aspects in Kafka paper.</p>
+
+<hr />
+<p>Q: What’s the correspondence between partition and topic?</p>
+
+<p>A: Each topic can have one or many partitions, each partition has only one topic.</p>
+
+<hr />
+<p>Q: Why does message use offset instead of id?</p>
+
+<p>A: Offset essentially has the same functionality of an id. It is unique and increasing(not consecutive). The offset of next message is to add the length of current message to its current offset.</p>
+
+<hr />
+<p>Q: What’s the correspondence between a consumer and partition?</p>
+
+<p>A: A consumer always consumes messages from a particular partition sequentially.</p>
+
+<hr />
+
+<p>Q: Why does Kafka not use fancy caching system to cache messages?</p>
+
+<p>A: Kafka relies on file system page cache. Because page cache is by no doubt extremely effective and independent from Kafka application process, Kafka messages can stay alive in cache even when a broker process is restarted. It also immensely reduces load for Java GC.</p>
+
+<hr />
+<p>Q: Why is broker stateless?</p>
+
+<p>A: Broker does not maintain how much each consumer has consumed. This makes broker less complicated and more efficient. Broker removes messages from queue on time-basis.</p>
+
+<hr />
+<p>Q: What’s the correspondence among consumer groups, consumers and topics?</p>
+
+<p>A: A conumer group consists of one or many consumers, which consume a set of topics. However each message can only be consumed by one consumer.</p>
+
+<hr />
+
+<p>Q: What does “a partition is the smallest unit of parallelism” mean?</p>
+
+<p>A: At a given time, all messages within a parition can only be consumed by a single consumer within each consumer group. If a topic’s messages need more consumers, we simply overpartition the topic.</p>
+
+<hr />
+<p>Q: What does Zookeeper do in Kafka?</p>
+
+<p>A: 1) detecting the addition and removal of brokers and consumers. 2) triggering a rebalance process in each consumer when above events happen. 3) maintaining the current offset in each partition. 4) stores brokers’ registry information, e.g. host and port, set of topics and corresponding parititon keys.</p>
+
+<hr />
+<p>Q: What does rebalance process do?</p>
+
+<p>A: Say consumer C in group G is deleted, Kafka will start a rebalance, it first remove C’s registry on topics/partiitons, then for each topic of C, the system uniformly distributes its corresponding partitions to other consumers in group G which also subscribes this topic.</p>
+
+<hr />
+<p>Q: Why does Kafka use at-least-once delivery instead of exactly-once delivery?</p>
+
+<p>A: Exactly-once delivery requires two-phase commit protocol, it’s simply less cost-effective. In addition, because there is no guarentee to avoid duplication, one must implement its own strategy.</p>
+
+<hr />
+
+<p>These are simply extractions from Kafka paper, there are many new stuffs after that, esp. replication, firewall and more.</p>
+
+</div>
+
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+    <li>
+      <span>06 Apr 2017 &raquo;</span> <a href="/2017/04/06/scalability-rules.html">Scalability Rules</a>
+    </li>
+    
+    <li>
+      <span>23 Mar 2017 &raquo;</span> <a href="/2017/03/23/mocha-timeout.html">mocha test exceeds timeout</a>
+    </li>
+    
+    <li>
+      <span>23 Feb 2017 &raquo;</span> <a href="/2017/02/23/nginx-add-header.html">nginx's add_header is not working</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and don't necessarily represent my 
+    employer’s positions, strategies or opinions.
+  </p>
+  
+
+  <p>
+    © Linyao Li, 2014 &mdash; built with <a href="http://jekyllrb.com/">Jekyll</a> using <a href="https://github.com/swanson/lagom">Lagom theme</a>
+  </p>
+</div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
