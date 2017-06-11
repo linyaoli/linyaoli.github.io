@@ -4,7 +4,7 @@
  <title>The blog of Linyao Li</title>
  <link href="http://example.com/atom.xml" rel="self"/>
  <link href="http://example.com"/>
- <updated>2017-04-17T17:38:51-07:00</updated>
+ <updated>2017-06-10T17:06:30-07:00</updated>
  <id>http://example.com</id>
  <author>
    <name>Linyao Li</name>
@@ -74,6 +74,41 @@
 &lt;hr /&gt;
 
 &lt;p&gt;These are simply extractions from Kafka paper, there are many new stuffs after that, esp. replication, firewall and more.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Appendix&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Each topic has an ever-growing log, with a default 7-day retention policy.&lt;/li&gt;
+  &lt;li&gt;Kafka uses zero-copy file-to-socket transfer.&lt;/li&gt;
+  &lt;li&gt;New features:
+    &lt;ul&gt;
+      &lt;li&gt;Compression&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Producer will compress messages by blocks, and consumer is responsible for decompressing. This is useful when mirroring data across data centers.&lt;/li&gt;
+      &lt;li&gt;Compression is time-consuming, so don’t use it for real-time required scenario.
+      - Replication&lt;/li&gt;
+      &lt;li&gt;Strong durability and high availability.&lt;/li&gt;
+      &lt;li&gt;Use primary-backup replication strategy, leader waits until writes finish on replicas before ack client. A f replicas tolerate f-1 failures.
+        &lt;ul&gt;
+          &lt;li&gt;Writes: write to leader -&amp;gt; write to log -&amp;gt; slave read from log -&amp;gt; update replica.&lt;/li&gt;
+          &lt;li&gt;Reads: always read from leader.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Upon leader failure
+        &lt;ul&gt;
+          &lt;li&gt;Surviving replicas register themselves in Zookeeper.&lt;/li&gt;
+          &lt;li&gt;First registered replica gets elected as leader.&lt;/li&gt;
+          &lt;li&gt;Each replica register a listener in Zookeeper for leader change.&lt;/li&gt;
+          &lt;li&gt;Leader waits until all other replicas catch up with leader’s data.&lt;/li&gt;
+          &lt;li&gt;Leader enables R/W.
+    - Stream processing (WIP)&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 </content>
  </entry>
  
