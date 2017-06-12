@@ -67,19 +67,23 @@ Appendix
 
 1. Each topic has an ever-growing log, with a default 7-day retention policy.
 2. Kafka uses zero-copy file-to-socket transfer.
-3. New features:
+3. New features
+
   - Compression
     - Producer will compress messages by blocks, and consumer is responsible for decompressing. This is useful when mirroring data across data centers.
     - Compression is time-consuming, so don't use it for real-time required scenario.
+
   - Replication
     - Strong durability and high availability.
     - Use primary-backup replication strategy, leader waits until writes finish on replicas before ack client. A f replicas tolerate f-1 failures.
       - Writes: write to leader -> write to log -> slave read from log -> update replica.
       - Reads: always read from leader.
+
     - Upon leader failure
       - Surviving replicas register themselves in Zookeeper.
       - First registered replica gets elected as leader.
       - Each replica register a listener in Zookeeper for leader change.
       - Leader waits until all other replicas catch up with leader's data.
       - Leader enables R/W.
+
   - Stream processing (WIP)

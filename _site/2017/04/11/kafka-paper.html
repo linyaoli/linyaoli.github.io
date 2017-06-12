@@ -9,11 +9,11 @@
   <title>Linyao Li - Kafka paper Q&A</title>
   <meta name="author" content="Linyao Li" />
   <meta name="description" content="The blog of Linyao Li" />
-  <link rel="canonical" href="http://example.com/2017/04/11/kafka-paper.html" />
+  <link rel="canonical" href="http://localhost:4000/2017/04/11/kafka-paper.html" />
 
   <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="/favicon.png">
-  <link rel="alternate" type="application/atom+xml" title="Linyao Li" href="http://example.com/atom.xml" />
+  <link rel="alternate" type="application/atom+xml" title="Linyao Li" href="http://localhost:4000/atom.xml" />
 
   <link rel="stylesheet" href="/assets/css/all.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-k2/8zcNbxVIh5mnQ52A0r3a6jAgMGxFJFE2707UxGCk= sha512-ZV9KawG2Legkwp3nAlxLIVFudTauWuBpC10uEafMHYL0Sarrz5A7G79kXh5+5+woxQ5HM559XX2UZjMJ36Wplg==" crossorigin="anonymous">
@@ -143,14 +143,18 @@
 <ol>
   <li>Each topic has an ever-growing log, with a default 7-day retention policy.</li>
   <li>Kafka uses zero-copy file-to-socket transfer.</li>
-  <li>New features:
-    <ul>
-      <li>Compression</li>
-    </ul>
+  <li>New features</li>
+</ol>
+
+<ul>
+  <li>Compression
     <ul>
       <li>Producer will compress messages by blocks, and consumer is responsible for decompressing. This is useful when mirroring data across data centers.</li>
-      <li>Compression is time-consuming, so don’t use it for real-time required scenario.
-      - Replication</li>
+      <li>Compression is time-consuming, so don’t use it for real-time required scenario.</li>
+    </ul>
+  </li>
+  <li>Replication
+    <ul>
       <li>Strong durability and high availability.</li>
       <li>Use primary-backup replication strategy, leader waits until writes finish on replicas before ack client. A f replicas tolerate f-1 failures.
         <ul>
@@ -164,13 +168,13 @@
           <li>First registered replica gets elected as leader.</li>
           <li>Each replica register a listener in Zookeeper for leader change.</li>
           <li>Leader waits until all other replicas catch up with leader’s data.</li>
-          <li>Leader enables R/W.
-    - Stream processing (WIP)</li>
+          <li>Leader enables R/W.</li>
         </ul>
       </li>
     </ul>
   </li>
-</ol>
+  <li>Stream processing (WIP)</li>
+</ul>
 
 </div>
 
@@ -179,15 +183,15 @@
   <ul class="posts">
     
     <li>
+      <span>11 May 2017 &raquo;</span> <a href="/2017/05/11/microservices.html">microservices Q&A</a>
+    </li>
+    
+    <li>
       <span>06 Apr 2017 &raquo;</span> <a href="/2017/04/06/scalability-rules.html">Scalability Rules</a>
     </li>
     
     <li>
       <span>23 Mar 2017 &raquo;</span> <a href="/2017/03/23/mocha-timeout.html">mocha test exceeds timeout</a>
-    </li>
-    
-    <li>
-      <span>23 Feb 2017 &raquo;</span> <a href="/2017/02/23/nginx-add-header.html">nginx's add_header is not working</a>
     </li>
     
   </ul>

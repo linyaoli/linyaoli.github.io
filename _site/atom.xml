@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
  
  <title>The blog of Linyao Li</title>
- <link href="http://example.com/atom.xml" rel="self"/>
- <link href="http://example.com"/>
- <updated>2017-06-10T17:06:30-07:00</updated>
- <id>http://example.com</id>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000"/>
+ <updated>2017-06-11T17:20:37-07:00</updated>
+ <id>http://localhost:4000</id>
  <author>
    <name>Linyao Li</name>
    <email></email>
@@ -13,10 +13,23 @@
 
  
  <entry>
+   <title>microservices Q&A</title>
+   <link href="http://localhost:4000/2017/05/11/microservices.html"/>
+   <updated>2017-05-11T00:00:00-07:00</updated>
+   <id>http://localhost:4000/2017/05/11/microservices</id>
+   <content type="html">&lt;p&gt;Microservice architecture&lt;/p&gt;
+
+&lt;p&gt;wIP&lt;/p&gt;
+
+&lt;hr /&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Kafka paper Q&A</title>
-   <link href="http://example.com/2017/04/11/kafka-paper.html"/>
+   <link href="http://localhost:4000/2017/04/11/kafka-paper.html"/>
    <updated>2017-04-11T00:00:00-07:00</updated>
-   <id>http://example.com/2017/04/11/kafka-paper</id>
+   <id>http://localhost:4000/2017/04/11/kafka-paper</id>
    <content type="html">&lt;p&gt;This post briefly discusses some key aspects in Kafka paper.&lt;/p&gt;
 
 &lt;hr /&gt;
@@ -81,14 +94,18 @@
 &lt;ol&gt;
   &lt;li&gt;Each topic has an ever-growing log, with a default 7-day retention policy.&lt;/li&gt;
   &lt;li&gt;Kafka uses zero-copy file-to-socket transfer.&lt;/li&gt;
-  &lt;li&gt;New features:
-    &lt;ul&gt;
-      &lt;li&gt;Compression&lt;/li&gt;
-    &lt;/ul&gt;
+  &lt;li&gt;New features&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Compression
     &lt;ul&gt;
       &lt;li&gt;Producer will compress messages by blocks, and consumer is responsible for decompressing. This is useful when mirroring data across data centers.&lt;/li&gt;
-      &lt;li&gt;Compression is time-consuming, so don’t use it for real-time required scenario.
-      - Replication&lt;/li&gt;
+      &lt;li&gt;Compression is time-consuming, so don’t use it for real-time required scenario.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Replication
+    &lt;ul&gt;
       &lt;li&gt;Strong durability and high availability.&lt;/li&gt;
       &lt;li&gt;Use primary-backup replication strategy, leader waits until writes finish on replicas before ack client. A f replicas tolerate f-1 failures.
         &lt;ul&gt;
@@ -102,21 +119,21 @@
           &lt;li&gt;First registered replica gets elected as leader.&lt;/li&gt;
           &lt;li&gt;Each replica register a listener in Zookeeper for leader change.&lt;/li&gt;
           &lt;li&gt;Leader waits until all other replicas catch up with leader’s data.&lt;/li&gt;
-          &lt;li&gt;Leader enables R/W.
-    - Stream processing (WIP)&lt;/li&gt;
+          &lt;li&gt;Leader enables R/W.&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-&lt;/ol&gt;
+  &lt;li&gt;Stream processing (WIP)&lt;/li&gt;
+&lt;/ul&gt;
 </content>
  </entry>
  
  <entry>
    <title>Scalability Rules</title>
-   <link href="http://example.com/2017/04/06/scalability-rules.html"/>
+   <link href="http://localhost:4000/2017/04/06/scalability-rules.html"/>
    <updated>2017-04-06T00:00:00-07:00</updated>
-   <id>http://example.com/2017/04/06/scalability-rules</id>
+   <id>http://localhost:4000/2017/04/06/scalability-rules</id>
    <content type="html">&lt;p&gt;This post is a note/headline for reading book Scalability Rules, so in the future I can look back
 to this rather than finding the book. If you find this interesting, go search &lt;a href=&quot;https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&amp;amp;field-keywords=scalability+rules&quot;&gt;Scalability Rules&lt;/a&gt;. Great book.&lt;/p&gt;
 
@@ -289,9 +306,9 @@ to this rather than finding the book. If you find this interesting, go search &l
  
  <entry>
    <title>mocha test exceeds timeout</title>
-   <link href="http://example.com/2017/03/23/mocha-timeout.html"/>
+   <link href="http://localhost:4000/2017/03/23/mocha-timeout.html"/>
    <updated>2017-03-23T00:00:00-07:00</updated>
-   <id>http://example.com/2017/03/23/mocha-timeout</id>
+   <id>http://localhost:4000/2017/03/23/mocha-timeout</id>
    <content type="html">&lt;p&gt;For the following case, you may see macha test exceeds timeout even with &lt;code&gt;timeout(6000)&lt;/code&gt; setup.
 Be sure to resolve promise at the end setTimeout.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;it('blah', () =&amp;gt; ) {
@@ -310,9 +327,9 @@ Be sure to resolve promise at the end setTimeout.&lt;/p&gt;
  
  <entry>
    <title>nginx's add_header is not working</title>
-   <link href="http://example.com/2017/02/23/nginx-add-header.html"/>
+   <link href="http://localhost:4000/2017/02/23/nginx-add-header.html"/>
    <updated>2017-02-23T00:00:00-08:00</updated>
-   <id>http://example.com/2017/02/23/nginx-add-header</id>
+   <id>http://localhost:4000/2017/02/23/nginx-add-header</id>
    <content type="html">&lt;p&gt;Just in case anyone turns into a clusterfuck that:
 NO, stackoverflow doesn’t help!(just like me)
 try this:&lt;/p&gt;
@@ -325,9 +342,9 @@ add_header Content-Disposition $content_disposition;
  
  <entry>
    <title>A Typical Design of Database Backfill System</title>
-   <link href="http://example.com/2016/03/07/backfill-systems.html"/>
+   <link href="http://localhost:4000/2016/03/07/backfill-systems.html"/>
    <updated>2016-03-07T00:00:00-08:00</updated>
-   <id>http://example.com/2016/03/07/backfill-systems</id>
+   <id>http://localhost:4000/2016/03/07/backfill-systems</id>
    <content type="html">&lt;p&gt;status: WIP&lt;/p&gt;
 
 &lt;p&gt;At some point, we may need to backfill new columns in a frequently queried table. Assume there are massive amount of
