@@ -7,7 +7,6 @@
   * [Nginx add header](notes/2017-02-23-nginx-add-header.md)
   * [Mocha timeout](notes/2017-03-23-mocha-timeout.md)
   * [Kafka paper Q&A](notes/2017-04-11-kafka-paper.md)
-  * [Microservices](notes/2017-05-11-microservices.md)
 
 * Books
 
