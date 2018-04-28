@@ -16,6 +16,9 @@
 * Algorithms
   
   * [Backtracks](notes/2018-04-28-backtrack.md)
+  * [Trees](notes/2018-04-28-trees.md)
+  * [Intro to Bitwise](notes/2018-04-28-bitwise-explaination.md)
+  * [Bitwise problems](notes/2018-04-28-bitwise-problems.md)
 
 * Interview Last Minute Notes
 
