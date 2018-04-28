@@ -1,17 +1,7 @@
----
-layout: post
-title: A Typical Design of Database Backfill System
-tags: programming
----
-
-status: WIP
+# A Typical Design of Database Backfill System
 
 At some point, we may need to backfill new columns in a frequently queried table. Assume there are massive amount of
 records, and each record has blah blah..
-
----
-* TOC
-{:toc}
 
 Generate backfill audits
 -----------------------
@@ -37,7 +27,7 @@ to avoid a whole table re-backfilling.
 
 Since this case does not happen constantly, one day gap is good enough (or extend to even longer depending on the amount of records).
 
-~~~ruby
+```ruby
 module DurableBackfill
   class BackfillAudit < ActiveRecord::Base
     WATERLINE_ACCOUNT_ID = -10
@@ -54,7 +44,7 @@ module DurableBackfill
     end
   end
 end
-~~~
+```
 
 Daemon to run backfill tasks
 ---------------
@@ -63,7 +53,7 @@ Before starting the actual backfill task, let's create backfill audits.
 Unless we have fully backfilled the table, backfill task need to run continuously in the background.
 Three minutes is not necessarily a good gap, but it is always open to change based on actual circumstances.
 
-~~~ruby
+```ruby
 require_relative 'task_list'
 
 module DurableBackfill
@@ -105,14 +95,14 @@ module DurableBackfill
     end
   end
 end
-~~~
+```
 
 A General Task
 -----------------
 
 A waterline account is not a real account, therefore do be aware that its id must not conflict with real account ids.
 
-~~~ruby
+```ruby
 module DurableBackfill
   class Task
     class RescheduleTask < StandardError ; end
@@ -166,25 +156,25 @@ module DurableBackfill
     end
   end
 end
-~~~
+```
 
 Task list
 ----------
 
 We use a tasks folder to keep all actual tasks.
 
-~~~ruby
+```ruby
 files = Dir.glob(File.dirname(__FILE__) + "/tasks/*.rb").each do  |f|
   require f
 end
-~~~
+```
 
 A sample backfill task
 -----------
 
 Now I'd like to backfill the column number_of_employee in table `company`.
 
-~~~ruby
+```ruby
 module DurableBackfill
   class BackfillNumberOfEmployee < Task
     self.title = 'backfill_number_of_employee'
@@ -198,4 +188,4 @@ module DurableBackfill
     end
   end
 end
-~~~
+```

@@ -1,11 +1,8 @@
----
-layout: post
-title: mocha test exceeds timeout
-tags: programming
----
+# mocha test exceeds timeout
+
 For the following case, you may see macha test exceeds timeout even with `timeout(6000)` setup.
 Be sure to resolve promise at the end setTimeout.
-~~~
+```js
 it('blah', () => ) {
   this.timeout(6000)
   return new Promise((resolve) => {
@@ -16,4 +13,4 @@ it('blah', () => ) {
     }, 5000)
   })
 }
-~~~
+```

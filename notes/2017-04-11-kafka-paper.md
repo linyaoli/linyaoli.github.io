@@ -1,7 +1,4 @@
----
-layout: post
-title: Kafka paper Q&A
-tags: programming
+# Kafka paper Q&A
 ---
 
 This post briefly discusses some key aspects in Kafka paper.

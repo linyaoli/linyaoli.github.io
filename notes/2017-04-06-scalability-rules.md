@@ -1,7 +1,4 @@
----
-layout: post
-title: Scalability Rules 
-tags: scalability 
+# Scalability Rules 
 ---
 
 This post is a note/headline for reading book Scalability Rules, so in the future I can look back
@@ -10,8 +7,6 @@ to this rather than finding the book. If you find this interesting, go search [S
 Before all of these below, please devote to the bible of scalable system [CAP](https://en.wikipedia.org/wiki/CAP_theorem).
 
 ---
-* TOC
-{:toc}
 
 I. Reduce the equation
 ---------------------
@@ -126,4 +121,3 @@ XII. Miscellaneous rules
 48. Remove businesses intelligence from transaction processing.
 49. Design your application to be monitored. ~~nagios~~ -> datadog.
 50. Be competent. 
-
