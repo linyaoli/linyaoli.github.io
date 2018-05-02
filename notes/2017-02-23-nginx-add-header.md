@@ -1,8 +1,7 @@
 # nginx's add_header is not working
 
-Just in case anyone turns into a clusterfuck that:
-NO, stackoverflow doesn't help!(just like me)
-try this:
+Try this:
+
 ```
 set $content_disposition $upstream_http_content_disposition;
 ...

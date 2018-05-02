@@ -1,7 +1,6 @@
 # A Typical Design of Database Backfill System
 
-At some point, we may need to backfill new columns in a frequently queried table. Assume there are massive amount of
-records, and each record has blah blah..
+At some point, we may need to [backfill](https://en.wiktionary.org/wiki/backfill) new columns in a frequently queried table.
 
 Generate backfill audits
 -----------------------

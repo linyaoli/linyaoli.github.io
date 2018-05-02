@@ -43,7 +43,11 @@ A: At a given time, all messages within a parition can only be consumed by a sin
 ------
 Q: What does Zookeeper do in Kafka?
 
-A: 1) detecting the addition and removal of brokers and consumers. 2) triggering a rebalance process in each consumer when above events happen. 3) maintaining the current offset in each partition. 4) stores brokers' registry information, e.g. host and port, set of topics and corresponding parititon keys.
+A: 
+1) detecting the addition and removal of brokers and consumers. 
+2) triggering a rebalance process in each consumer when above events happen. 
+3) maintaining the current offset in each partition. 
+4) stores brokers' registry information, e.g. host and port, set of topics and corresponding parititon keys.
 
 ------
 Q: What does rebalance process do?

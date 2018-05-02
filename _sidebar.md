@@ -8,10 +8,14 @@
   * [Mocha timeout](notes/2017-03-23-mocha-timeout.md)
   * [Kafka paper Q&A](notes/2017-04-11-kafka-paper.md)
   * [After you type a URL...](notes/2018-04-28-after-your-type-an-url.md)
+  * [Goroutines](notes/2018-05-02-go-routines.md)
 
 * Books
 
   * [Scalability Rules](notes/2017-04-06-scalability-rules.md)
+
+* Papers
+  * [Papers to Read](notes/2018-05-03-papers-we-love.md)
 
 * Algorithms
   
@@ -19,6 +23,7 @@
   * [Trees](notes/2018-04-28-trees.md)
   * [Intro to Bitwise](notes/2018-04-28-bitwise-explaination.md)
   * [Bitwise problems](notes/2018-04-28-bitwise-problems.md)
+  * [Find duplicates](notes/2018-05-09-find-duplicates.md)
 
 * Interview Last Minute Notes
 
