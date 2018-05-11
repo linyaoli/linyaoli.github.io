@@ -22,4 +22,27 @@ variable that points to the currently running goroutine.
 In a time-sharing system the operating systems must constantly switch the attention of CPU between these processes by recording the state of the current process(as
 discussed above, `process switching` takes tens of register operations to save all states).
 
+### 
+```go
+package main
 
+import (
+    "fmt"
+    "sync"
+    "time"
+    )
+
+func main() {
+wg := &sync.WaitGroup{}
+    for i := 0; i < 3; i++ {
+      wg.Add(1)
+        go func(i int) {
+          defer wg.Done() //release wait when done
+            time.Sleep(time.Second * time.Duration(i))
+            fmt.Print(i)
+        }(i)
+    }
+    wg.Wait()
+      fmt.Println()
+}
+```
