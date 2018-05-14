@@ -9,6 +9,7 @@
   * [Kafka paper Q&A](notes/2017-04-11-kafka-paper.md)
   * [After you type a URL...](notes/2018-04-28-after-your-type-an-url.md)
   * [Goroutines](notes/2018-05-02-go-routines.md)
+  * [Ruby tricks](notes/2018-05-14-ruby-tricks.md)
 
 * Books
 
