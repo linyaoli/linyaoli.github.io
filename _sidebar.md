@@ -10,6 +10,7 @@
   * [After you type a URL...](notes/2018-04-28-after-your-type-an-url.md)
   * [Goroutines](notes/2018-05-02-go-routines.md)
   * [Ruby tricks](notes/2018-05-14-ruby-tricks.md)
+  * [List of Useful Ruby Gems](notes/2018-05-16-list-of-important-gems.md)
 
 * Books
 
