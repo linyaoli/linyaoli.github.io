@@ -73,3 +73,7 @@ Static security scanner that identifies vulnerabilities in Rails applications.
 
 ### Fog
 Upload and store your files on external servers like Amazon’s S3 or Google’s Cloud Storage.
+
+### Rbspy
+Rbspy is a long-requested ruby process profiler and it's written in Rust. Check [here](rbspy.github.io).
+It's not a rubygem, but it helps a lot in certain situations.
