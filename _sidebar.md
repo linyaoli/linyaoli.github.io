@@ -12,6 +12,7 @@
   * [Ruby tricks](notes/2018-05-14-ruby-tricks.md)
   * [List of Useful Ruby Gems](notes/2018-05-16-list-of-important-gems.md)
   * [L4 & L7 Load Balancers](notes/2018-05-24-comparison-of-load-balancers.md)
+  * [Tweaking systems](notes/2018-07-04-useful-system-tweaking-readings.md)
 
 * Books
 
