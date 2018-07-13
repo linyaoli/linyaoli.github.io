@@ -77,3 +77,14 @@ Upload and store your files on external servers like Amazon’s S3 or Google’s
 ### Rbspy
 Rbspy is a long-requested ruby process profiler and it's written in Rust. Check [here](rbspy.github.io).
 It's not a rubygem, but it helps a lot in certain situations.
+
+### Global_uid
+here: git@github.com:zendesk/global_uid.git
+
+This is actually not a gem but a activerecord plugin., which basically gives you the whole world of safely generating ids. 
+
+### Webrick
+A HTTP server toolkit which can easily setup a web server.
+
+### Scientist
+A Ruby library for carefully refactoring critical paths.
