@@ -43,5 +43,8 @@ http://www.inf.ufpr.br/andrey/ci221/docs/beckCunningham89.pdf
 10. Programming as an Experience: the inspiration for Self - David Ungar, Randall B. Smith
 http://labs.oracle.com/features/tenyears/volcd/papers/6Ungar.pdf
 
-## More, Many More
-![Alt text](/paper.pdf)
+## Distributed
+1. Paxos: https://www.coursera.org/lecture/cloud-computing/3-3-paxos-simply-0Y9In
+2. Google SRE: https://landing.google.com/sre/book/chapters/part1.html
+3. Borg: https://pdos.csail.mit.edu/6.824/papers/borg.pdf
+
