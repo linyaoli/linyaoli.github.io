@@ -1,6 +1,7 @@
-* Writings 
+* Writings
 
   * [Backfill Systems](notes/2016-03-07-backfill-systems.md)
+  * [Carrierwave is not thread-safe](notes/2018-11-02-carrierwave-is-not-thread-safe.md)
 
 * Notes
 
@@ -22,7 +23,7 @@
   * [Papers to Read](notes/2018-05-03-papers-we-love.md)
 
 * Algorithms
-  
+
   * [Backtracks](notes/2018-04-28-backtrack.md)
   * [Trees](notes/2018-04-28-trees.md)
   * [Intro to Bitwise](notes/2018-04-28-bitwise-explaination.md)
