@@ -196,7 +196,7 @@ Let's first look at Sidekiq's source code. It's pretty straight-forward, it just
 So as long as the thread remains, the class attribute `processors` will always be shared by the jobs, just like what was found above, nothing particularly hard to believe.
 
 Now let's look at Resque's source code on processing jobs. ([code](https://github.com/resque/resque/blob/master/lib/resque/worker.rb))
-Resque has this ENV variable `FORK_PER_JOB`(`true` by default), it controls how Resque processes a job. With it on, Resque will call `perform_with_fork` to fork a new process to execute the job:
+Resque has this ENV variable `FORK_PER_JOB`(`true` by default), it controls how Resque processes a job. With it on, Resque will call `perform_with_fork` to fork a new CHILD process to execute the job:
 ```ruby
       begin
         @child = fork do
@@ -211,7 +211,9 @@ Resque has this ENV variable `FORK_PER_JOB`(`true` by default), it controls how 
       end
 ```
 
-And because it is a completely new process, the class variable `processors` is always newly assigned and empty, thus we will never see it grows. This is most-likely one of the reasons why Resque is slower than Sidekiq.
+Although unix `fork()` does copy variables into the new process, but any allocation after the fork will not be shared between child processes. Therefore, even class variable `processors` is modified, other child processes won't be affected, and thus we will never see it grows.
+
+This is most-likely one of the reasons why Resque is slower than Sidekiq.
 
 ## Conclusion
 It is probably not precise enough to use the topic <b>Carrierwave is not thread-safe</b>, as even in single thread worker, the issue still exists. So be careful while using Sidekiq, when the author [claimed](https://github.com/mperham/sidekiq/wiki/Problems-and-Troubleshooting#threading):
