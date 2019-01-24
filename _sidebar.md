@@ -14,6 +14,7 @@
   * [List of Useful Ruby Gems](notes/2018-05-16-list-of-important-gems.md)
   * [L4 & L7 Load Balancers](notes/2018-05-24-comparison-of-load-balancers.md)
   * [Tweaking systems](notes/2018-07-04-useful-system-tweaking-readings.md)
+  * [Setting Up Shadowsocks](notes/2019-01-24-shadowsocks-setup.md)
 
 * Books
 
