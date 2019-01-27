@@ -25,8 +25,13 @@ For Mac there is ShadowsocksX-NG. Go to the server preference and add the addres
 ## Step 4 (Optional): Optimization
 I'll bring up a few methods here and you may try them out yourself, personally I haven't found them to be very effective.
 1. Enable TCP fast open in /etc/sysctl.conf.
-2. Use BBR protocol to maximize bandwidth.
-
 There are some documents out there telling you how to do the above.
+
+2. Use BBR protocol to maximize bandwidth.
+```
+wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
+chmod +x bbr.sh && ./bbr.sh
+```
+This is highly recommended. I personally had seen a huge leap from 1mbps to 4mbps while streaming videos in youtube.
 
 If you are into this topic, you may notice some research were going on, which tried to identify shadowsocks traffic with machine learning algorithms. I've read the paper and pretty sure it's a piece of junk and currently not in GFW(because it's not working).
