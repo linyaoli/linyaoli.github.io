@@ -15,6 +15,7 @@
   * [L4 & L7 Load Balancers](notes/2018-05-24-comparison-of-load-balancers.md)
   * [Tweaking systems](notes/2018-07-04-useful-system-tweaking-readings.md)
   * [Setting Up Shadowsocks](notes/2019-01-24-shadowsocks-setup.md)
+  * [Sidekiq Notes](notes/2019-01-29-sidekiq-notes.md)
 
 * Books
 
