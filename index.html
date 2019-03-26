@@ -1,48 +1,43 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>lli's Nexus</title>
-  <meta name="description" content="Super fast, all natural JSON logger for Node.js">
+  <title>lli's nexus</title>
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//unpkg.com/docsify-themeable/dist/css/theme-simple.css">
+  <link rel="shortcut icon" href="favicon.png" type="image/png" sizes="16x16">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+
   <style>
-    :root {
-      --base-font-size: 16px;
-      --theme-color: rgb(104, 118, 52);
-      --link-color:  rgb(104, 118, 52);
-      --link-color--hover: rgb(137, 152, 100);
-      --sidebar-name-margin: 0;
-      --sidebar-name-padding: 0;
-      --code-font-size: .9em;
+  .app-sub-sidebar .section-link:before {
+    content: "";
+    padding-right: 4px;
+  }
+
+  iframe {
+    box-shadow: 0 0 10px #ccc;
+  }
+
+  @media only screen and (max-device-width: 500px) {
+    iframe.react {
+      display: none;
     }
-    .sidebar > h1 {
-      margin-bottom: -.75em;
-      margin-top: .75em;
-    }
-    .markdown-section a code {
-      color: var(--link-color)!important;
-    }
-    .markdown-section code:not([class*="lang-"]):not([class*="language-"]) {
-      white-space: unset
-    }
+  }
   </style>
 </head>
+
 <body>
   <div id="app"></div>
 </body>
+
 <script>
   window.$docsify = {
-    name: '<img src=pino-tree.png style="height:4em;"><div style="margin-top:-.65em">pino</div>',
-    loadSidebar: 'docsify/sidebar.md',
-    repo: 'https://github.com/pinojs/pino',
-    auto2top: true,
-    ga: 'UA-103155139-1'
+    name: '',
+    repo: '',
+    loadSidebar: true,
   }
 </script>
+
 <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
-<script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
-<script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
+<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 
 </html>
