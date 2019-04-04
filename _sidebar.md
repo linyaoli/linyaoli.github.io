@@ -18,6 +18,7 @@
   * [Sidekiq Notes](notes/2019-01-29-sidekiq-notes.md)
   * [Regex Cheat Sheet](notes/2019-02-14-regex-cheatsheet.md)
   * [Kubernetes Quick Notes](notes/2019-03-26-k8s-quick-dict.md)
+  * [Kubernetes Cheat Sheet](notes/2019-04-04-k8s-cheat-sheet.md)
 
 * Books
 
