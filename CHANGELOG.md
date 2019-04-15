@@ -1,5 +1,6 @@
 
-### Version: ..1 ----- 2019-04-15 11:16:35
+### Version: 1.0.1 ----- 2019-04-15 11:17:20
  
-    1: add a note on fixing readline error
+    1: add version notes
+
 
