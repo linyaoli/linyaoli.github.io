@@ -5,8 +5,6 @@
 
 * Notes
 
-  * [Nginx add header](notes/2017-02-23-nginx-add-header.md)
-  * [Mocha timeout](notes/2017-03-23-mocha-timeout.md)
   * [Kafka paper Q&A](notes/2017-04-11-kafka-paper.md)
   * [After you type a URL...](notes/2018-04-28-after-your-type-an-url.md)
   * [Goroutines](notes/2018-05-02-go-routines.md)
@@ -19,6 +17,11 @@
   * [Regex Cheat Sheet](notes/2019-02-14-regex-cheatsheet.md)
   * [Kubernetes Quick Notes](notes/2019-03-26-k8s-quick-dict.md)
   * [Kubernetes Cheat Sheet](notes/2019-04-04-k8s-cheat-sheet.md)
+
+* Issues
+  * [Nginx add header](notes/2017-02-23-nginx-add-header.md)
+  * [Mocha timeout](notes/2017-03-23-mocha-timeout.md)
+  * [ruby's readline error](notes/2019-04-15-readline-error.md)
 
 * Books
 
