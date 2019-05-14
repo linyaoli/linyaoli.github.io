@@ -46,3 +46,8 @@ Last time after I upgraded several libraries, ruby command line mode couldn't op
   ```
   brew switch readline 7.0.5
   ```
+
+  If you cannot install 7.0.5 anymore by it, try
+  ```
+  brew reinstall https://raw.githubusercontent.com/Homebrew/homebrew-core/98c7e5b72e309adce82dbe2aae8cb1f68ae84830/Formula/readline.rb
+  ```
