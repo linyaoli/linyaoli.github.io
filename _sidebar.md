@@ -2,6 +2,7 @@
 
   * [Backfill Systems](notes/2016-03-07-backfill-systems.md)
   * [Carrierwave is not thread-safe](notes/2018-11-02-carrierwave-is-not-thread-safe.md)
+  * [Ruby Specs Best Practice](notes/2019-05-21-rspec-practices.md)
 
 * Notes
 
