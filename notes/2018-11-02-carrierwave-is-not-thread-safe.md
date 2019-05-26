@@ -1,5 +1,16 @@
 # Carrierwave Is NOT Thread-safe
 
+Update:
+
+The community had suggested the following way to solve the issue:
+
+Calling `self.class.process` from a uploader instance will cause thread-safety issue, as you mentioned.
+Use condition instead, in this way class's processors are not modified on processing.
+https://github.com/carrierwaveuploader/carrierwave/blob/master/lib/carrierwave/uploader/processing.rb#L33-L34
+
+
+-----------------------
+
 > I'm not gonna assume that everyone knows what beneath Carrierwave, Resque and Sidekiq, so bear with me if you find this post too rigmarole.
 
 
