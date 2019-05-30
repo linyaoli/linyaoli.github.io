@@ -27,6 +27,7 @@
 * Books
 
   * [Scalability Rules](notes/2017-04-06-scalability-rules.md)
+  * [Ruby Under a Microscope](notes/2019-05-30-ruby-under-a-microscope.md)
 
 * Papers
   * [Papers to Read](notes/2018-05-03-papers-we-love.md)
