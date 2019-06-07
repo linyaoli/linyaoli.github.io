@@ -28,6 +28,7 @@
 
   * [Scalability Rules](notes/2017-04-06-scalability-rules.md)
   * [Ruby Under a Microscope](notes/2019-05-30-ruby-under-a-microscope.md)
+  * [How To Solve a Problem](notes/2019-06-07-how-to-solve-a-problem.md)
 
 * Papers
   * [Papers to Read](notes/2018-05-03-papers-we-love.md)
