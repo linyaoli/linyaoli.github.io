@@ -1,7 +1,7 @@
 # How to solve it
 -----------------
 
-1. UNDERSTAND THE PROBLEM
+## UNDERSTAND THE PROBLEM
 - You have to understand the problem.
 - What is the unknown? What are the data? What is the condition?
 - Is it possible to satisfy the condition? Is the condition sufficient to deter- mine the unknown? Or is it insufficient? Or redundant? Or contradictory?
@@ -9,7 +9,7 @@
 - Separate the various parts of the condition. Can you write them down?
 
 
-2. DEVISING A PLAN
+## DEVISING A PLAN
 - Find the connection between the data and the unknown. You may be obliged to consider auxiliary problems if an immediate connection cannot be found. You should obtain eventually a plan of the solution.
 - Have you seen it before? Or have you seen the same problem in a slightly different form?
 - Do you know a related problem? Do you know a theorem that could be useful?
@@ -19,11 +19,11 @@
 - If you cannot solve the proposed problem, try to solve first some related problem. Could you imagine a more accessible related problem? A more general problem? A more special problem? An analogous problem? Could you solve a part of the problem? Keep only a part of the condition, drop the other part; how far is the unknown then determined, how can it vary? Could you derive something useful from the data? Could you think of other data appropriate to determine the unknown? Could you change the unknown or data, or both if necessary, so that the new unknown and the new data are nearer to each other?
 - Did you use all the data? Did you use the whole condition? Have you taken into account all essential notions involved in the problem?
 
-3. CARRYING OUT THE PLAN
+## CARRYING OUT THE PLAN
 - Carry out your plan.
 - Carrying out your plan of the solution, check each step. Can you see clearly that the step is correct? Can you prove that it is correct?
 
-4. LOOKING BACK
+## LOOKING BACK
 - Examine the solution obtained.
 - Can you check the result? Can you check the argument?
 - Can you derive the solution differently? Can you see it at a glance? • Can you use the result, or the method, for some other problem?
