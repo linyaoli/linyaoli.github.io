@@ -41,6 +41,7 @@
   * [Bitwise problems](notes/2018-04-28-bitwise-problems.md)
   * [Floyd's tortoise and hare](notes/2018-05-09-cycle-detection.md)
   * [Find duplicates](notes/2018-05-09-find-duplicates.md)
+  * [Dynamic programming](notes/2019-06-20-dynamic-programming.md)
 
 * Interview Last Minute Notes
 
