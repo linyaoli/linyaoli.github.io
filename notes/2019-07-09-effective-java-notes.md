@@ -77,7 +77,9 @@ Tagged classes are verbose, error-prone and inefficient.
        // ...
    }
 ```
+
 Instead, we should use
+
 ```
 abstract class Figure {
   // ...
@@ -87,6 +89,7 @@ class Rectangle extends Figure {
    // ...
 }
 ```
+
 ### 21. Use function objects to represent strategies
 A primary use of function pointers is to implement the Strategy pattern. To implement this pattern in Java, declare an interface to represent the strategy, and a class that implements this interface for each concrete strategy. When a concrete strategy is used only once, it is typically declared and instantiated as an anonymous class.
 
@@ -100,6 +103,7 @@ A primary use of function pointers is to implement the Strategy pattern. To impl
 ### 22. Favor static member classes over nonstatic
 A nested class should only exist to serve its enclosing class. There are 4 kinds of such classes: static member class, nonstatic member class, anonymous class and local class.
 e.g. anonymous class
+
 ```
 Test t = new Test()
 {
@@ -126,6 +130,7 @@ private static void unsafeAdd(List list, Object o) {
   list.add(o);
 }
 ```
+
 ### 24. Eliminate unchecked warnings
 Every time you use an `@SuppressWarnings("unchecked")` annotation, add a comment saying why it is safe to do so.
 
@@ -134,6 +139,7 @@ Arrays are covariant. E.g. if `Sub` is a subtype of `Super`, then array type `Su
 
 ### 26. Favor generic types
 An generic Stack:
+
 ```
 public class Stack<E> {
   private E[] elements;
@@ -157,4 +163,74 @@ public class Stack<E> {
 }
 ```
 ### 27. Favor generic methods
+e.g.
 
+```
+public static <E> Set<E> union(Set<E> s1, Set<E> s2) {
+  Set<E> result = new HashSet<E>(s1);
+  result.addAll(s2);
+  return result;
+}
+```
+
+And there is also generic static factory method:
+
+```
+public static <K,V> HashMap<K,V> newHashMap() {
+  return new HashMap<K,V>();
+}
+```
+
+And generic singleton factory:
+
+```
+
+public interface UnaryFunction<T> {
+  T apply(T arg);
+}
+
+// Generic singleton factory pattern
+private static UnaryFunction<Object> IDENTITY_FUNCTION =
+  new UnaryFunction<Object>() {
+    public Object apply(Object arg) { return arg; }
+  };
+
+// IDENTITY_FUNCTION is stateless and its type parameter is
+// unbounded so it's safe to share one instance across all types.
+@SuppressWarnings("unchecked")
+public static <T> UnaryFunction<T> identityFunction() {
+  return (UnaryFunction<T>) IDENTITY_FUNCTION;
+}
+```
+
+### 28. Use bounded wildcards to increase API flexibility
+e.g. for a generic Stack class
+
+```
+public class Stack<E> {
+       public Stack();
+       public void push(E e);
+       public E pop();
+       public boolean isEmpty();
+}
+```
+
+we can use wildcard as such:
+
+```
+
+// Wildcard type for parameter that serves as an E producer
+public void pushAll(Iterable<? extends E> src) {
+  for (E e : src)
+    push(e);
+}
+
+
+// Wildcard type for parameter that serves as an E consumer
+public void popAll(Collection<? super E> dst) {
+  while (!isEmpty())
+    dst.add(pop());
+}
+```
+
+For maximum flexibility, use wildcard types on input parameters that represent producers or consumers.
