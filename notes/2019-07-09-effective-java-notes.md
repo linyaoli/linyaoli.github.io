@@ -234,3 +234,130 @@ public void popAll(Collection<? super E> dst) {
 ```
 
 For maximum flexibility, use wildcard types on input parameters that represent producers or consumers.
+
+### 29. Consider typesafe heterogeneous containers
+```
+public class Favorites {
+  private Map<Class<?>, Object> favorites =
+    new HashMap<Class<?>, Object>();
+  public <T> void putFavorite(Class<T> type, T instance) {
+    if (type == null)
+      throw new NullPointerException("Type is null");
+    favorites.put(type, instance);
+  }
+  public <T> T getFavorite(Class<T> type) {
+    return type.cast(favorites.get(type));
+  }
+}
+```
+
+### 30. Use enums instead of int constants
+Enums provide compile-time type safety.
+Use
+
+```
+public enum Orange { NAVEL, TEMPLE, BLOOD }
+```
+over int enum pattern, which creates ambiguity of values.
+
+```
+public static final int APPLE_FUJI = 0;
+public static final int APPLE_PIPPIN = 1;
+public static final int APPLE_GRANNY_SMITH = 2;
+```
+
+### 31. Use instance fields instead of ordinals
+`ordinal()` method returns the numeric position of each enum, it is very hard to maintain. Therefore, store the position value in instance field.
+
+```
+public enum Ensemble {
+  SOLO(1), DUET(2), TRIO(3), QUARTET(4), QUINTET(5),
+  SEXTET(6), SEPTET(7), OCTET(8), DOUBLE_QUARTET(8),
+  NONET(9), DECTET(10), TRIPLE_QUARTET(12);
+
+  private final int numberOfMusicians;
+  Ensemble(int size) { this.numberOfMusicians = size; }
+  public int numberOfMusicians() { return numberOfMusicians; }
+}
+```
+
+### 32. Use EnumSet instead of bit fields
+### 33. Use EnumMap instead of ordinal indexing
+### 34. Emulate extensible enums with interfaces
+### 35. Use annotations to naming patterns
+There is simply no reason to use naming patterns now that we have annotations.
+### 36. Consistently use the Override annotation
+e.g.
+
+```
+public boolean equals(Foo f)
+```
+
+does not override
+
+```
+public boolean equals(Object o)
+```
+
+it actually overloads it. Therefore it could be problematic. Make sure to annotate with `@override`.
+
+### 37. Use marker interfaces to define types
+A marker interface is an interface that contains no method declaration.
+
+### 38. Check parameters for validity
+e.g. index value must be non-negative.
+
+### 39. Make defensive copies when needed
+- You must program defensively, with the assumption that clients of your class will do their best to destroy its invariants.
+- defensive copies are made before checking the validity of the parameters (Item 38), and the validity check is performed on the copies rather than on the originals.
+- do not use the clone method to make a defensive copy of a parameter whose type is subclassable by untrusted parties.
+
+### 40. Design method signatures carefully
+Be careful with method names, providing convenience methods, long param lists.
+
+### 41. Use overloading judiciously
+- The choice of which overloading to invoke is made at compile time.
+- selection among overloaded methods is static, while selection among overridden methods is dynamic.
+
+### 42. Use varargs judiciously
+```
+static int sum(int... args) {
+  for (int arg : args) {
+   // ...
+  }
+  // ...
+}
+```
+Do not assume the size of args.
+
+### 43. Return empty arrays or collections, not nulls
+
+### 44. Write doc comments for all exposed API elements
+
+## General Programming
+### 45. Minimize the scope of local variables
+- The most powerful technique for minimizing the scope of a local variable is to declare it where it is first used.
+- Nearly every local variable declaration should contain an initializer.
+- Therefore prefer `for` loops to `while` loops.
+
+### 46. Prefer for-each loops to traditional for loops
+After Java 1.5,
+```
+for (Element e : elements) {
+  doSomething(e);
+}
+```
+
+### 47. Know and use the libraries
+Every programmer should be familiar with the contents of `java.lang`, `java.util`, and, to a lesser extent, `java.io`. Also `java.util.concurrent` is very important.
+
+### 48. Avoid float and double if exact answers are required
+The float and double types are particularly ill- suited for monetary calculations because it is impossible to represent 0.1 (or any other negative power of ten) as a float or double exactly.
+e.g.
+```
+System.out.println(1.03 - .42);
+```
+
+gives `0.6100000000000001`. don't use float or double for any calculations that require an exact answer.
+
+### 49. Prefer primitive types to boxed primitives
