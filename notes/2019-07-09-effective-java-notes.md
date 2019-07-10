@@ -361,3 +361,156 @@ System.out.println(1.03 - .42);
 gives `0.6100000000000001`. don't use float or double for any calculations that require an exact answer.
 
 ### 49. Prefer primitive types to boxed primitives
+Every primitive type has a corresponding reference type, called a boxed primitive. The boxed primitives corresponding to int, double, and boolean are Integer, Double, and Boolean.
+Boxed primitives have distinct identities, nonfunctional value `null`(including in Integer etc.), and less time/space efficient than primitives.
+
+### 50. Avoid strings where other types are more appropriate
+Strings are poor substitutes for other value types.
+
+### 51. Beware the performance of string concatenation
+Because strings are immutable, string concatenation means two strings are copied and concatenated into a new string. Therefore for an acceptable performance, use `StringBuilder` in place of string.
+```
+public String statement() {
+  StringBuilder b = new StringBuilder(numItems() * LINE_WIDTH);
+  for (int i = 0; i < numItems(); i++)
+    b.append(lineForItem(i));
+  return b.toString();
+}
+
+```
+
+### 52. Refer to objects by their interfaces
+Use
+```
+List<Subscriber> subscribers = new Vector<Subscriber>();
+```
+
+rather than
+
+```
+Vector<Subscriber> subscribers = new Vector<Subscriber>();
+```
+
+### 53. Prefer interfaces to reflection
+By using reflection:
+- You lose benefits of compile-time type checking, because it can be used to invoke nonexistent or inaccessible methods.
+- It adds performance overhead, much slower than normal method invocation.
+
+As a rule, objects should not be accessed reflectively in normal applications at runtime.
+
+### 54. Use native methods judiciously
+Java Native Interfaces(JNI) allows direct call to native methods, which are written in native language such as C/C++.
+- May cause memory corruption.
+- Previously it was mostly used for better performance, but nowadays it loses such advantage. e.g. BigInteger is rewritten in JAVA now.
+
+### 55. Optimize judiciously
+- Strive to write good programs rather than fast ones.
+- Strive to avoid design decisions that limit performance.
+- Consider the performance consequences of your API design decisions.
+- Do profiling.
+
+### 56. Adhere to generally accepted naming conventions
+### 57. Use exceptions only for exceptional conditions
+Exceptions are, as their name implies, to be used only for exceptional conditions; they should never be used for ordinary control flow.
+
+### 58. Use checked exceptions for recoverable conditions and runtime exceptions for programming errors
+Use checked exceptions for recoverable conditions and runtime exceptions for programming errors.
+
+### 59. Avoid unnecessary use of checked exceptions
+### 60. Favor the use of standard exceptions
+- `IllegalArgumentException` : Non-null parameter value is inappropriate
+- `IllegalStateException` : Object state is inappropriate for method invocation
+- `NullPointerException` : Parameter value is null where prohibited
+- `IndexOutOfBoundsException` : Index parameter value is out of range
+- `ConcurrentModificationException` : Concurrent modification of an object has been detected where it is prohibited
+- `UnsupportedOperationException` : Object does not support method
+
+### 61. Throw exceptions appropriate to the abstraction
+Higher layers should catch lower-level exceptions and, in their place, throw exceptions that can be explained in terms of the higher-level abstraction. This idiom is known as exception translation:
+```
+// Exception Translation
+try {
+  // Use lower-level abstraction to do our bidding
+  ...
+} catch(LowerLevelException e) {
+  throw new HigherLevelException(...);
+}
+```
+
+### 62. Document all exceptions thrown by each method
+Use the Javadoc @throws tag to document each unchecked exception that a method can throw, but do not use the throws keyword to include unchecked exceptions in the method declaration.
+
+### 63. Include failure-capture information in detailed messages
+To capture the failure, the detail message of an exception should contain the values of all parameters and fields that contributed to the exception.
+
+### 64. Strive for failure atomicity
+Generally speaking, a failed method invocation should leave the object in the state that it was in prior to the invocation.
+
+### 65. Don't ignore exceptions
+i.e. do not use empty `catch` block.
+
+### 66. Synchronize access to shared mutable data
+- `synchronized` ensures that only one thread can execute a method or block at one time. Not only does synchronization prevent a thread from observing an object in an inconsistent state, but it ensures that each thread entering a synchronized method or block sees the effects of all previous modifications that were guarded by the same lock.
+- Synchronization is required for reliable communication between threads as well as for mutual exclusion.
+- Synchronization has no effect unless both read and write operations are synchronized.
+<b> When multiple threads share mutable data, each thread that reads or writes the data must perform synchronization.</b>
+
+### 67. Avoid exccessive synchronization
+- To avoid liveness and safety failures, never cede control to the client within a synchronized method or block.
+- As a rule, you should do as little work as possible inside synchronized regions.
+
+### 68. Prefer executors and tasks to threads
+```
+ExecutorService executor = Executors.newSingleThreadExecutor();
+executor.execute(runnable);
+executor.shutdown();
+```
+This class allowed clients to enqueue work items for asynchronous processing by a background thread. If you want more than one thread to process requests from the queue, simply call a different static factory that creates a different kind of executor service called a thread pool.
+
+### 69. Prefer concurrency utilities to wait and notify
+- Given the difficulty of using wait and notify correctly, you should use the higher-level concurrency utilities instead.
+- The concurrent collections provide high-performance concurrent implementations of standard collection interfaces such as List, Queue, and Map. To provide high concurrency, these implementations manage their own synchronization internally.locking it will have no effect but to slow the program.
+
+### 70. Document thread safety
+To enable safe concurrent use, a class must clearly document what level of thread safety it supports.
+- immutable: instance of this class appears constant; no external synchronization is needed. e.g. String, Long and BigInteger.
+- unconditionally thread safe: instance of this class are mutable, but it has sufficient internal synchronization that can be used concurrently. e.g. `Random` and `ConcurrentHashMap`.
+- conditionally thread safe: some of them require external synchronization for safe concurrent use. e.g. `Collections.synchronized` wrappers.
+- not thread-safe: instances of class are mutable. Each method must be enclosed by external synchronization lock.
+- thread-hostile: there are very few of them, just don't use it concurrently. e.g. `System.runFinalizersOnExit`.
+
+### 71. Use lazy initialization judiciously
+Under most circumstances, normal initialization is preferable to lazy initialization. However if the initialization is costly, lazy loading has its use.
+
+### 72. Don't depend on the thread scheduler
+- Any program that relies on the thread scheduler for correctness or performance is likely to be nonportable.
+- The best way to write a robust, responsive, portable program is to ensure that the average number of runnable threads is not significantly greater than the number of processors.
+
+### 73. Avoid thread group
+It was designed for applets for security purposes, and never worked as expected, and now it's obsolete.
+
+### 74. Implement Serializable judiciously
+- A major cost of implementing `Serializable` is that it decreases the flexi- bility to change a class's implementation once it has been released.
+- it increases the likelihood of bugs and security holes.
+- it increases the testing burden associated with releasing a new version of a class.
+
+Classes designed for inheritance should rarely implement `Serializable`, and interfaces should rarely extend it.
+
+### 75. Consider using a custom serialized form
+- Do not accept the default serialized form without first considering whether it is appropriate.
+- Use `readObject` to avoid null values, ensure invariants and security.
+
+### 76. Write readObject methods defensively
+e.g.
+```
+// readObject method with validity checking
+private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+    s.defaultReadObject();
+    // Check that our invariants are satisfied
+    if (start.compareTo(end) > 0)
+      throw new InvalidObjectException(start +" after "+ end);
+}
+```
+
+### 77. For instance control, prefer enum types to readResolve
+### 78. Consider serialization proxies instead of seriliazed instances
