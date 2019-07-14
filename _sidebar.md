@@ -4,6 +4,16 @@
   * [Carrierwave is not thread-safe](notes/2018-11-02-carrierwave-is-not-thread-safe.md)
   * [Ruby Specs Best Practice](notes/2019-05-21-rspec-practices.md)
 
+* Books
+
+  * [Scalability Rules](notes/2017-04-06-scalability-rules.md)
+  * [Ruby Under a Microscope](notes/2019-05-30-ruby-under-a-microscope.md)
+  * [How To Solve a Problem](notes/2019-06-07-how-to-solve-a-problem.md)
+  * [Effective Java 2nd Edition](notes/2019-07-09-effective-java-notes.md)
+
+* Papers
+  * [Papers to Read](notes/2018-05-03-papers-we-love.md)
+
 * Notes
 
   * [Kafka paper Q&A](notes/2017-04-11-kafka-paper.md)
@@ -25,16 +35,6 @@
   * [Mocha timeout](notes/2017-03-23-mocha-timeout.md)
   * [ruby's readline error](notes/2019-04-15-readline-error.md)
 
-* Books
-
-  * [Scalability Rules](notes/2017-04-06-scalability-rules.md)
-  * [Ruby Under a Microscope](notes/2019-05-30-ruby-under-a-microscope.md)
-  * [How To Solve a Problem](notes/2019-06-07-how-to-solve-a-problem.md)
-  * [Effective Java 2nd Edition](notes/2019-07-09-effective-java-notes.md)
-
-* Papers
-  * [Papers to Read](notes/2018-05-03-papers-we-love.md)
-
 * Algorithms
 
   * [Backtracks](notes/2018-04-28-backtrack.md)
@@ -45,6 +45,10 @@
   * [Find duplicates](notes/2018-05-09-find-duplicates.md)
   * [Dynamic programming](notes/2019-06-20-dynamic-programming.md)
 
+* Snippets
+
+  * [Simple Cache!](notes/2019-04-05-simple-cache.md)
+
 * Interview Last Minute Notes
 
   * [Database](notes/2018-04-28-database.md)
@@ -52,7 +56,3 @@
   * [Operating System](notes/2018-04-28-os.md)
   * [Java](notes/2019-07-10-java.md)
   * [System Design](notes/2019-07-14-system-design.md)
-
-* Snippets
-
-  * [Simple Cache!](notes/2019-04-05-simple-cache.md)
