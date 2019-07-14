@@ -51,6 +51,7 @@
   * [Networking](notes/2018-04-28-networking.md)
   * [Operating System](notes/2018-04-28-os.md)
   * [Java](notes/2019-07-10-java.md)
+  * [System Design](notes/2019-07-14-system-design.md)
 
 * Snippets
 
