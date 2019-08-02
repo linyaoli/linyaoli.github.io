@@ -22,7 +22,7 @@ Major components of the system that must be included:
 
 Some are optional but great to have:
 
-1. service-oriented / microservice architecture
+1. service-oriented / microservice architecture, avoid monolithic applications.
 2. service-to-service communication method (RESTful, message bus and etc.)
 3. service discovery
 4. scalable infrastructure
