@@ -58,4 +58,4 @@
   * [Operating System](notes/2018-04-28-os.md)
   * [Java](notes/2019-07-10-java.md)
   * [System Design](notes/2019-07-14-system-design.md)
-  * [Ruby](notes/2019-09-21-oo-design.md)
+  * [Ruby](notes/2019-09-23-ruby-interview.md)
