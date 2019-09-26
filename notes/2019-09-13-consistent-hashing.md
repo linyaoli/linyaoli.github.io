@@ -25,6 +25,7 @@ if m = 1
 - We can just relocate data which should be in machine `b` into `c`, right? But there is another problem, the load of machine `c` could suddenly become very high. So the question is, can we evenly distribute data from `b` into all other machines?
 - Of course we can :) 
 First we need to split each actual machine into, let's say, 3 virtual machines, they are evenly distributed along the circle.
+
 ```
    a1 ---> b1 ---> c1 ---> d1 ---> e1 ----> f1 ----> a2 ---> b2
                                                              |
@@ -38,14 +39,17 @@ First we need to split each actual machine into, let's say, 3 virtual machines, 
                                           ....          <--  e2
                                                             
 ```
+
 So what happens when the actual machine `b` is removed? All the virtual `b` child machines are removed, while all other virtual machines are still evenly distributed. Therefore each machine will still have the same traffic load.
 
 - How do we achieve this? Simple, we just need to use two hash keys. e.g.
+
 ```
 m1 = hash1(data) mod 6
 m2 - hash2(data) mod 3
 if m1 = 1, and m2 = 2, it means data will be put into b3.
 ```
+
 That's it.
 
 #### Real-life application

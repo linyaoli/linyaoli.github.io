@@ -45,6 +45,7 @@
   * [Find duplicates](notes/2018-05-09-find-duplicates.md)
   * [Dynamic programming](notes/2019-06-20-dynamic-programming.md)
   * [Consistent Hashing](notes/2019-09-13-consistent-hashing.md)
+  * [Bloom Filter](notes/2019-09-21-bloom-filter.md)
 
 * Snippets
 
@@ -57,3 +58,4 @@
   * [Operating System](notes/2018-04-28-os.md)
   * [Java](notes/2019-07-10-java.md)
   * [System Design](notes/2019-07-14-system-design.md)
+  * [Ruby](notes/2019-09-21-oo-design.md)
