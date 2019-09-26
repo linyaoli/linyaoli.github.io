@@ -5,20 +5,20 @@ Clarify the use case, interface and data of the system, double check parts that 
 ### Devising a plan
 There are a few cornerstones that need to be taken into consideration:
 
-- characteristics of the traffic: e.g. request rate, R/W-heavy, I/O rate, storage volume etc. <b>Make calculations!</b>
+- patterns of the traffic: e.g. request rate, R/W-heavy, I/O rate, storage volume etc. <b>Make calculations!</b>
 - scale of the system: e.g. geologically is it distributed across different locations.
 - concurrency: i.e. is it possible that high concurrent requests hit on a single data entry.
-- scalability, reliability, availability, efficiency, serviceability/manageability.
+- scalability, reliability, availability, performance, serviceability/manageability and cost.
 
 With these, break down the problem into components.
 
 ### Carrying out the plan
 Major components of the system that must be included:
-1. business service
-2. data storage
-3. networking, load balancing
+1. business logic and its abstraction
+2. data storage and caching
+3. networking and load balancing
 4. interface
-5. caching
+5. real-world performance
 
 Some are optional but great to have:
 
@@ -44,7 +44,7 @@ Now look back and try to find bottlenecks and drawbacks of the system:
 5. Is the system easy to maintain?
 
 
-## Problems
+## Example Problems
 The following are some system design problem examples and key points to discuss:
 
 ### URL Shortener

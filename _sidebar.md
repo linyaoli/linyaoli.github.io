@@ -44,6 +44,7 @@
   * [Floyd's tortoise and hare](notes/2018-05-09-cycle-detection.md)
   * [Find duplicates](notes/2018-05-09-find-duplicates.md)
   * [Dynamic programming](notes/2019-06-20-dynamic-programming.md)
+  * [Consistent Hashing](notes/2019-09-13-consistent-hashing.md)
 
 * Snippets
 
