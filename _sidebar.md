@@ -46,6 +46,7 @@
   * [Dynamic programming](notes/2019-06-20-dynamic-programming.md)
   * [Consistent Hashing](notes/2019-09-13-consistent-hashing.md)
   * [Bloom Filter](notes/2019-09-21-bloom-filter.md)
+  * [Jesophus Problem](notes/2019-09-28-the-josephus-problem.md)
 
 * Snippets
 
