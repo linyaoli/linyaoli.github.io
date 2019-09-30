@@ -12,11 +12,11 @@
   * [Effective Java 2nd Edition](notes/2019-07-09-effective-java-notes.md)
 
 * Papers
+  * [Kafka paper Q&A](notes/2017-04-11-kafka-paper.md)
   * [Papers to Read](notes/2018-05-03-papers-we-love.md)
 
 * Notes
 
-  * [Kafka paper Q&A](notes/2017-04-11-kafka-paper.md)
   * [After you type a URL...](notes/2018-04-28-after-your-type-an-url.md)
   * [Goroutines](notes/2018-05-02-go-routines.md)
   * [Ruby tricks](notes/2018-05-14-ruby-tricks.md)
@@ -24,7 +24,7 @@
   * [L4 & L7 Load Balancers](notes/2018-05-24-comparison-of-load-balancers.md)
   * [Tweaking systems](notes/2018-07-04-useful-system-tweaking-readings.md)
   * [Setting Up Shadowsocks](notes/2019-01-24-shadowsocks-setup.md)
-  * [Sidekiq Notes](notes/2019-01-29-sidekiq-notes.md)
+  * [Sidekiq Error Callback](notes/2019-01-29-sidekiq-notes.md)
   * [Regex Cheat Sheet](notes/2019-02-14-regex-cheatsheet.md)
   * [Kubernetes Quick Notes](notes/2019-03-26-k8s-quick-dict.md)
   * [Kubernetes Cheat Sheet](notes/2019-04-04-k8s-cheat-sheet.md)
@@ -57,6 +57,6 @@
   * [Database](notes/2018-04-28-database.md)
   * [Networking](notes/2018-04-28-networking.md)
   * [Operating System](notes/2018-04-28-os.md)
-  * [Java](notes/2019-07-10-java.md)
   * [System Design](notes/2019-07-14-system-design.md)
   * [Ruby](notes/2019-09-23-ruby-interview.md)
+  * [Java](notes/2019-07-10-java.md)
