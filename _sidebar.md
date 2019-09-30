@@ -24,6 +24,7 @@
   * [L4 & L7 Load Balancers](notes/2018-05-24-comparison-of-load-balancers.md)
   * [Tweaking systems](notes/2018-07-04-useful-system-tweaking-readings.md)
   * [Setting Up Shadowsocks](notes/2019-01-24-shadowsocks-setup.md)
+  * [Setting Up V2Ray](notes/2019-09-30-setting-up-v2ray.md)
   * [Sidekiq Error Callback](notes/2019-01-29-sidekiq-notes.md)
   * [Regex Cheat Sheet](notes/2019-02-14-regex-cheatsheet.md)
   * [Kubernetes Quick Notes](notes/2019-03-26-k8s-quick-dict.md)
