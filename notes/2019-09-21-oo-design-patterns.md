@@ -1,6 +1,6 @@
 # Object Oriented Design Patterns
 #### Factory
-![Factory](../assets/factory_pattern_uml_diagram.jpg)
+![Factory](../assets/oo_design/factory_pattern_uml_diagram.jpg)
 ```java
 public class ShapeFactory {
    //use getShape method to get object of type shape
@@ -31,18 +31,18 @@ public class FactoryPatternDemo {
 ```
 #### Observer
 Observer pattern is used when there is one-to-many relationship between objects such as if one object is modified, its depenedent objects are to be notified automatically. Observer pattern falls under behavioral pattern category.
-![Observer](../assets/observer_pattern_uml_diagram.jpg)
+![Observer](../assets/oo_design/observer_pattern_uml_diagram.jpg)
 #### Singleton
-![Singleton](../assets/singleton_pattern_uml_diagram.jpg)
+![Singleton](../assets/oo_design/singleton_pattern_uml_diagram.jpg)
 #### Decorator
 Decorator pattern allows a user to add new functionality to an existing object without altering its structure. This type of design pattern comes under structural pattern as this pattern acts as a wrapper to existing class.
-![Decorator](../assets/decorator_pattern_uml_diagram.jpg)
+![Decorator](../assets/oo_design/decorator_pattern_uml_diagram.jpg)
 #### Strategy
 In Strategy pattern, a class behavior or its algorithm can be changed at run time. This type of design pattern comes under behavior pattern. In Strategy pattern, we create objects which represent various strategies and a context object whose behavior varies as per its strategy object. The strategy object changes the executing algorithm of the context object.
-![Strategy](../assets/strategy_pattern_uml_diagram.jpg)
+![Strategy](../assets/oo_design/strategy_pattern_uml_diagram.jpg)
 #### State 
 In State pattern a class behavior changes based on its state. This type of design pattern comes under behavior pattern. In State pattern, we create objects which represent various states and a context object whose behavior varies as its state object changes.
-![State](../assets/state_pattern_uml_diagram.jpg)
+![State](../assets/oo_design/state_pattern_uml_diagram.jpg)
 ```java
 public class StartState implements State {
    public void doAction(Context context) {
@@ -85,7 +85,7 @@ public class StatePatternDemo {
 ```
 #### Proxy
 In proxy pattern, a class represents functionality of another class. This type of design pattern comes under structural pattern. In proxy pattern, we create object having original object to interface its functionality to outer world.
-![Proxy](../assets/proxy_pattern_uml_diagram.jpg)
+![Proxy](../assets/oo_design/proxy_pattern_uml_diagram.jpg)
 ```java
 public class RealImage implements Image {
    private String fileName;
@@ -134,7 +134,7 @@ public class ProxyPatternDemo {
 }
 ```
 #### Composite
-![Composite](../assets/composite_pattern_uml_diagram.jpg)
+![Composite](../assets/oo_design/composite_pattern_uml_diagram.jpg)
 ```java
 public class Employee {
    //...
@@ -155,7 +155,7 @@ public class Employee {
 }
 ```
 #### Builder
-![Builder](../assets/builder_pattern_uml_diagram.jpg)
+![Builder](../assets/oo_design/builder_pattern_uml_diagram.jpg)
 ```java
 public class MealBuilder {
 
@@ -175,7 +175,7 @@ public class MealBuilder {
 }
 ```
 #### MVC(Model-View-Controller)
-![MVC](../notes/mvc_pattern_uml_diagram.jpg)
+![MVC](../assets/oo_design/mvc_pattern_uml_diagram.jpg)
 #### Visitor
 In Visitor pattern, we use a visitor class which changes the executing algorithm of an element class. By this way, execution algorithm of element can vary as and when visitor varies. This pattern comes under behavior pattern category. As per the pattern, element object has to accept the visitor object so that visitor object handles the operation on the element object.
 ```java
