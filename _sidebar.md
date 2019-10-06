@@ -30,6 +30,7 @@
   * [Kubernetes Quick Notes](notes/2019-03-26-k8s-quick-dict.md)
   * [Kubernetes Cheat Sheet](notes/2019-04-04-k8s-cheat-sheet.md)
   * [java.util.concurrent](notes/2019-07-10-java-util-concurrent.md)
+  * [Object Oriented Patterns](notes/2019-09-21-oo-design-patterns.md)
 
 * Issues
   * [Nginx add header](notes/2017-02-23-nginx-add-header.md)
