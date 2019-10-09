@@ -31,6 +31,7 @@
   * [Kubernetes Cheat Sheet](notes/2019-04-04-k8s-cheat-sheet.md)
   * [java.util.concurrent](notes/2019-07-10-java-util-concurrent.md)
   * [Object Oriented Patterns](notes/2019-09-21-oo-design-patterns.md)
+  * [Kafka High Throughput](notes/2019-10-09-why-kafka-fast.md)
 
 * Issues
   * [Nginx add header](notes/2017-02-23-nginx-add-header.md)
@@ -53,6 +54,7 @@
 * Snippets
 
   * [Simple Cache!](notes/2019-04-05-simple-cache.md)
+  * [LRU Cache](notes/null)
 
 * Interview Last Minute Notes
 
