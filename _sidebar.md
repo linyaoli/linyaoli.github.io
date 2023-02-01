@@ -32,6 +32,7 @@
   * [java.util.concurrent](notes/2019-07-10-java-util-concurrent.md)
   * [Object Oriented Patterns](notes/2019-09-21-oo-design-patterns.md)
   * [Kafka High Throughput](notes/2019-10-09-why-kafka-fast.md)
+  * [HTTP status codes](notes/2023-02-01-http-codes.md)
 
 * Issues
   * [Nginx add header](notes/2017-02-23-nginx-add-header.md)
