@@ -51,6 +51,7 @@
   * [Consistent Hashing](notes/2019-09-13-consistent-hashing.md)
   * [Bloom Filter](notes/2019-09-21-bloom-filter.md)
   * [Jesophus Problem](notes/2019-09-28-the-josephus-problem.md)
+  * [Shazam](notes/2024-07-01-shazam.md)
 
 * Snippets
 
